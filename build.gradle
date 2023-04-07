@@ -1,0 +1,78 @@
+plugins {
+    id 'java'
+    id 'maven-publish'
+    id 'org.springframework.boot' version '3.0.5' apply false
+    id 'io.spring.dependency-management' version '1.1.0' apply false
+
+    id "org.openapi.generator" version "6.2.1" apply false
+    id "org.sonarqube" version "3.5.0.2730" apply false
+    id "com.google.cloud.tools.jib" version "3.3.1" apply false
+
+}
+
+
+ext {
+    versions = [
+            // ordered alphabetically
+            jsonNullable: '0.2.4',
+            jsr305      : '3.0.2',
+            lombok      : '1.18.26',
+            mapstruct   : '1.5.3.Final',
+            springDoc   : '1.7.0',
+            springEnvers: '3.0.4'
+    ]
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'maven-publish'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
+    group = 'com.github.trks1970.dynaprop'
+    version = '0.0.0'
+
+    repositories {
+        mavenCentral()
+        mavenLocal()
+    }
+    java {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+    bootJar {
+        enabled = false
+    }
+    jar {
+        enabled = true
+        archiveBaseName = "${project.name}"
+        archiveVersion = "${project.version}"
+        archiveClassifier = ""
+    }
+    publishing {
+        publications {
+            //noinspection GroovyAssignabilityCheck
+            mavenJava(MavenPublication) {
+                from components.java
+            }
+        }
+        repositories {
+            mavenLocal()
+        }
+    }
+    tasks.withType(PublishToMavenLocal).configureEach {
+        onlyIf {
+            !project.name.endsWith("-service-be")
+        }
+    }
+
+    tasks.named("publishToMavenLocal").configure {
+        dependsOn jar
+    }
+}
+
+
+
+
+
+

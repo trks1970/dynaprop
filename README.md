@@ -1,0 +1,2 @@
+# Dynamic Properties with SpringDataJPA
+
