@@ -8,6 +8,8 @@ plugins {
     id "org.sonarqube" version "3.5.0.2730" apply false
     id "com.google.cloud.tools.jib" version "3.3.1" apply false
 
+    id 'com.diffplug.spotless' version '6.14.0' apply false
+
 }
 
 
@@ -28,18 +30,29 @@ subprojects {
     apply plugin: 'maven-publish'
     apply plugin: 'org.springframework.boot'
     apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'com.diffplug.spotless'
 
-    group = 'com.github.trks1970.dynaprop'
+    group = 'com.github.trks1970.common'
     version = '0.0.0'
 
     repositories {
         mavenCentral()
         mavenLocal()
     }
+    spotless {
+        java {
+            importOrder()
+            removeUnusedImports()
+            googleJavaFormat()
+        }
+    }
+
     java {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
+    compileJava.dependsOn 'spotlessApply'
+
     bootJar {
         enabled = false
     }

@@ -4,7 +4,7 @@ pluginManagement {
     }
 }
 
-rootProject.name = 'dynaprop'
-include 'dynaprop-common'
+rootProject.name = 'common'
+include 'common-extensible'
 
 
