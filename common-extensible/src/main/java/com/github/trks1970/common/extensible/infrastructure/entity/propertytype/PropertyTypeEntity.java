@@ -8,5 +8,5 @@ public interface PropertyTypeEntity<ID extends Serializable, E extends Extensibl
     extends NamedEntity<ID> {
   E getExtensibleType();
 
-  PropertyTypeEntity<ID, E> extensibleType(E extensibleType);
+  PropertyTypeEntity<ID, E> setExtensibleType(E extensibleType);
 }

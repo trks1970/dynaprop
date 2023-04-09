@@ -34,7 +34,7 @@ public abstract class PropertyTypeRepositoryBase<
             (PE)
                 mapper()
                     .toEntity(propertyType)
-                    .extensibleType(
+                    .setExtensibleType(
                         extensibleTypeEntityRepository()
                             .findById(extensibleTypeId)
                             .orElseThrow(() -> notFoundException(extensibleTypeId, null, null))));

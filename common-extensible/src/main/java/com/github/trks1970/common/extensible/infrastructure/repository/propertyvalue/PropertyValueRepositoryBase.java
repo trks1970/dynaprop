@@ -29,7 +29,7 @@ public abstract class PropertyValueRepositoryBase<
             (VE)
                 mapper()
                     .toEntity(propertyValue)
-                    .extensible(
+                    .setExtensible(
                         extensibleEntityRepository()
                             .findById(extensibleId)
                             .orElseThrow(() -> notFoundException(extensibleId, null, null))));

@@ -16,9 +16,9 @@ public interface PropertyValueEntity<
 
   PT getPropertyType();
 
-  PropertyValueEntity<ID, ET, E, PT> propertyType(PT propertyType);
+  PropertyValueEntity<ID, ET, E, PT> setPropertyType(PT propertyType);
 
   E getExtensible();
 
-  PropertyValueEntity<ID, ET, E, PT> extensible(E extensible);
+  PropertyValueEntity<ID, ET, E, PT> setExtensible(E extensible);
 }
