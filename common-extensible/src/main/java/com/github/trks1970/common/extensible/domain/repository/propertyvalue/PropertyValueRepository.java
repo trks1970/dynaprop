@@ -5,4 +5,6 @@ import com.github.trks1970.common.extensible.domain.model.propertyvalue.Property
 import java.io.Serializable;
 
 public interface PropertyValueRepository<ID extends Serializable, T extends PropertyValue<ID>>
-    extends NamedTypeRepository<ID, T> {}
+    extends NamedTypeRepository<ID, T> {
+  void addToExtensible(ID extensibleId, T propertyValue);
+}

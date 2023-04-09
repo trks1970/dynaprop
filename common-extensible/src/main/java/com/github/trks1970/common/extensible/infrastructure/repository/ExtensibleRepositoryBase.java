@@ -6,5 +6,5 @@ import com.github.trks1970.common.extensible.domain.repository.ExtensibleReposit
 import java.io.Serializable;
 
 public abstract class ExtensibleRepositoryBase<
-        ID extends Serializable, P extends PropertyValue<ID>, T extends Extensible<ID, P>>
-    implements ExtensibleRepository<ID, P, T> {}
+        ID extends Serializable, PV extends PropertyValue<ID>, E extends Extensible<ID>>
+    implements ExtensibleRepository<ID, PV, E> {}

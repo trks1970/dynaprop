@@ -4,7 +4,7 @@ public interface Persistent<ID> {
   ID getId();
 
   @SuppressWarnings("unchecked")
-  default Class<Persistent<ID>> getType() {
+  default Class<Persistent<ID>> getPersistentClass() {
     return (Class<Persistent<ID>>) this.getClass();
   }
 }
