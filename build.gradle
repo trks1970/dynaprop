@@ -44,6 +44,7 @@ subprojects {
             importOrder()
             removeUnusedImports()
             googleJavaFormat()
+            formatAnnotations()
         }
     }
 

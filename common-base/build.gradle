@@ -38,7 +38,12 @@ dependencies {
     testImplementation "com.tngtech.archunit:archunit-junit5:1.0.0"
     testImplementation "com.github.database-rider:rider-junit5:1.35.0"
     testCompileOnly "org.projectlombok:lombok:1.18.24"
-    testAnnotationProcessor "org.projectlombok:lombok:1.18.24"
+
+    testAnnotationProcessor "org.hibernate:hibernate-jpamodelgen:6.1.7.Final"
+    testAnnotationProcessor "org.projectlombok:lombok-mapstruct-binding:0.2.0"
+    testAnnotationProcessor "org.mapstruct:mapstruct-processor:${versions.mapstruct}"
+    testAnnotationProcessor "org.projectlombok:lombok:${versions.lombok}"
+
 
 
 }
@@ -63,4 +68,8 @@ bootJar {
 
 jar {
     enabled = true
+}
+test {
+    useJUnitPlatform()
+    testLogging.showStandardStreams = true
 }

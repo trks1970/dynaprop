@@ -5,6 +5,7 @@ import com.github.trks1970.common.domain.model.Persistent;
 import com.github.trks1970.common.domain.repository.PersistentTypeRepository;
 import jakarta.validation.Valid;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
@@ -22,7 +23,7 @@ public abstract class PersistentTypeService<ID extends Serializable, T extends P
     return repository().findById(id);
   }
 
-  public Set<T> findAllById(Set<ID> ids) throws NotFoundException {
+  public List<T> findAllById(Set<ID> ids) throws NotFoundException {
     return repository().findAllById(ids);
   }
 

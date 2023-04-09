@@ -6,5 +6,5 @@ import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.data.repository.history.RevisionRepository;
 
 @NoRepositoryBean
-public interface JPABaseRepository<T, ID, R extends Number & Comparable<R>>
+public interface JpaBaseRepository<T, ID, R extends Number & Comparable<R>>
     extends JpaRepository<T, ID>, JpaSpecificationExecutor<T>, RevisionRepository<T, ID, R> {}

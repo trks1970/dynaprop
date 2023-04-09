@@ -5,27 +5,26 @@ import com.github.trks1970.common.domain.model.Persistent;
 import com.github.trks1970.common.domain.repository.PersistentTypeRepository;
 import com.github.trks1970.common.infrastructure.entity.PersistentEntity;
 import com.github.trks1970.common.infrastructure.mapper.EntityMapper;
-import com.github.trks1970.common.infrastructure.repository.jpa.JPABaseRepository;
+import com.github.trks1970.common.infrastructure.repository.jpa.JpaBaseRepository;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 
 @Slf4j
 public abstract class PersistentEntityRepositoryBase<
         ID extends Serializable, T extends Persistent<ID>, E extends PersistentEntity<ID>>
     implements PersistentTypeRepository<ID, T> {
 
-  protected abstract JPABaseRepository<E, ID, Long> repository();
+  protected abstract JpaBaseRepository<E, ID, Long> repository();
 
   protected abstract EntityMapper<ID, T, E> mapper();
 
-  protected abstract Class<T> getTypeClass();
-
   @Override
   public T save(T item) {
-    log.debug("Saving {}, {}", getTypeClass().getName(), item);
+    log.debug("Saving {}, {}", item.getClass().getName(), item);
     E itemEntity;
     if (item.getId() == null) {
       itemEntity = repository().save(mapper().toEntity(item));
@@ -38,31 +37,34 @@ public abstract class PersistentEntityRepositoryBase<
 
   @Override
   public T findById(ID id) throws NotFoundException {
-    log.debug("Finding type {} by id {}", getTypeClass().getName(), id);
+    log.debug("Finding by id {}", id);
     return toDomain(findEntityById(id));
   }
 
   @Override
-  public Set<T> findAllById(Set<ID> ids) throws NotFoundException {
-    log.debug("Finding {} by ids {}", getTypeClass().getName(), ids);
-    return repository().findAllById(ids).stream().map(this::toDomain).collect(Collectors.toSet());
+  public List<T> findAllById(Set<ID> ids) throws NotFoundException {
+    log.debug("Finding by ids {}", ids);
+    return repository().findAllById(ids).stream().map(this::toDomain).toList();
   }
 
   @Override
   public void deleteById(ID id) {
-    log.debug("Deleting {} by id {}", getTypeClass().getName(), id);
+    log.debug("Deleting by id {}", id);
     repository().deleteById(id);
   }
 
-  @NonNull
-  public E findEntityById(@NonNull ID id) {
-    log.debug("Finding entity for type {} by id {}", getTypeClass().getName(), id);
-    return repository()
-        .findById(id)
-        .orElseThrow(() -> new NotFoundException(getTypeClass(), "id " + id));
+  @NonNull public E findEntityById(@NonNull ID id) {
+    log.debug("Finding entity by id {}", id);
+    return repository().findById(id).orElseThrow(() -> notFoundException(id, null, null));
   }
 
   protected T toDomain(E entity) {
     return mapper().toDomain(entity);
+  }
+
+  @SuppressWarnings("unused")
+  protected NotFoundException notFoundException(
+      @Nullable ID id, @Nullable Persistent<ID> type, @Nullable PersistentEntity<ID> entity) {
+    return new NotFoundException(Persistent.class, "id " + id);
   }
 }

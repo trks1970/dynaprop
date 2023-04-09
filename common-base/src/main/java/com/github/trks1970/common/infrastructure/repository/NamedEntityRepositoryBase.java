@@ -4,7 +4,8 @@ import com.github.trks1970.common.domain.model.Named;
 import com.github.trks1970.common.domain.repository.NamedTypeRepository;
 import com.github.trks1970.common.infrastructure.entity.NamedEntity;
 import java.io.Serializable;
-import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -16,8 +17,10 @@ public abstract class NamedEntityRepositoryBase<
   protected abstract Specification<E> nameSpecification(String name);
 
   @Override
-  public Optional<T> findByName(String name) {
+  public Set<T> findByName(String name) {
     log.debug("{} finding by name {}", getClass().getName(), name);
-    return repository().findAll(nameSpecification(name)).stream().findFirst().map(this::toDomain);
+    return repository().findAll(nameSpecification(name)).stream()
+        .map(this::toDomain)
+        .collect(Collectors.toSet());
   }
 }

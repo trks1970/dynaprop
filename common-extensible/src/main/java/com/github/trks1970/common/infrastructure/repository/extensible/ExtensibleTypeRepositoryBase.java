@@ -6,7 +6,7 @@ import com.github.trks1970.common.domain.repository.extensible.ExtensibleTypeRep
 import com.github.trks1970.common.infrastructure.entity.extensbile.ExtensibleTypeEntity;
 import com.github.trks1970.common.infrastructure.entity.extensbile.propertytype.PropertyTypeEntity;
 import com.github.trks1970.common.infrastructure.repository.NamedEntityRepositoryBase;
-import com.github.trks1970.common.infrastructure.repository.jpa.JPABaseRepository;
+import com.github.trks1970.common.infrastructure.repository.jpa.JpaBaseRepository;
 import java.io.Serializable;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -20,7 +20,7 @@ public abstract class ExtensibleTypeRepositoryBase<
         E extends ExtensibleTypeEntity<ID, P>>
     extends NamedEntityRepositoryBase<ID, T, E> implements ExtensibleTypeRepository<ID, T> {
 
-  protected abstract JPABaseRepository<P, ID, Long> propertyTypeRepository();
+  protected abstract JpaBaseRepository<P, ID, Long> propertyTypeRepository();
 
   @Override
   @SuppressWarnings("unchecked")
