@@ -36,7 +36,6 @@ class NamedUuidServiceTest {
   void setup() {
     assert repository != null;
     repository.deleteAll();
-    ;
   }
 
   @Test
