@@ -11,7 +11,7 @@ plugins {
     // TODO: set false positive in OWASP Dependency Check
     id "com.github.spotbugs" version "5.0.13" apply false
     id 'com.diffplug.spotless' version '6.14.0' apply false
-    id "org.sonarqube" version "3.5.0.2730" apply false
+    id "org.sonarqube" version "4.0.0.2929" apply false
     id "org.owasp.dependencycheck" version "8.0.2"
     id 'com.google.cloud.tools.jib' version '3.3.1' apply false
 }
@@ -109,13 +109,13 @@ subprojects {
         }
     }
 
-    /*sourceSets {
+    sourceSets {
         main {
             java {
                 srcDir "${buildDir}/generated/src/main/java"
             }
         }
-    }*/
+    }
 
 
     compileJava {
@@ -125,6 +125,13 @@ subprojects {
         options.compilerArgs += "-Amapstruct.unmappedTargetPolicy=ERROR"
     }
     compileJava.dependsOn 'spotlessApply'
+
+    jacocoTestReport {
+        reports {
+            xml.required = true
+            //xml.outputLocation = file("${buildDir}/reports/jacoco.xml")
+        }
+    }
 
     test {
         testLogging.showStandardStreams = true
@@ -138,6 +145,7 @@ subprojects {
             property "sonar.login", "admin"
             // you have to set this manually in sonar
             property "sonar.password", "password"
+            //property 'sonar.coverage.jacoco.xmlReportPaths', "${buildDir}/reports/jacoco.xml"
         }
     }
     tasks.named("sonar").configure {

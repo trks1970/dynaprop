@@ -67,7 +67,7 @@ class PersistentLongServiceTest {
 
     TestPersistentLong found = service.findById(persistent.getId());
 
-    assertThat(found).isEqualTo(persistent).usingRecursiveComparison();
+    assertThat(found).usingRecursiveComparison().isEqualTo(persistent);
   }
 
   @Test

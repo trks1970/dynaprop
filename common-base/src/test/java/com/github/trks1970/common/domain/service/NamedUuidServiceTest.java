@@ -68,7 +68,7 @@ class NamedUuidServiceTest {
 
     TestNamedUuid found = service.findById(persistent.getId());
 
-    assertThat(found).isEqualTo(persistent).usingRecursiveComparison();
+    assertThat(found).usingRecursiveComparison().isEqualTo(persistent);
   }
 
   @Test
@@ -105,7 +105,7 @@ class NamedUuidServiceTest {
     Set<TestNamedUuid> found = service.findByName("persistent1");
 
     assertThat(found.size()).isEqualTo(1);
-    assertThat(found.iterator().next()).isEqualTo(persistent).usingRecursiveComparison();
+    assertThat(found.iterator().next()).usingRecursiveComparison().isEqualTo(persistent);
   }
 
   @Test
