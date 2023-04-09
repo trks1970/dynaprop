@@ -53,7 +53,8 @@ public abstract class PersistentEntityRepositoryBase<
     repository().deleteById(id);
   }
 
-  @NonNull public E findEntityById(@NonNull ID id) {
+  @NonNull
+  public E findEntityById(@NonNull ID id) {
     log.debug("Finding entity by id {}", id);
     return repository().findById(id).orElseThrow(() -> notFoundException(id, null, null));
   }

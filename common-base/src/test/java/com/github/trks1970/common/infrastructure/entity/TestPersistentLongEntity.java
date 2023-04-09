@@ -30,7 +30,8 @@ public class TestPersistentLongEntity implements PersistentEntity<Long> {
 
   @Version
   @Column(name = "revision")
-  @Nullable private Long revision;
+  @Nullable
+  private Long revision;
 
   @Column(name = "bool_value")
   private Boolean value;

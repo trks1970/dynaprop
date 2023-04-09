@@ -1,5 +1,6 @@
 package com.github.trks1970.common.infrastructure.entity.audit;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -8,21 +9,23 @@ import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.persistence.Version;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
 import org.hibernate.envers.RevisionEntity;
 import org.hibernate.envers.RevisionNumber;
 import org.hibernate.envers.RevisionTimestamp;
 
 @Entity
 @Table(name = "revision")
-@Getter
-@Setter
+@Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@ToString
 @RevisionEntity(UsernameRevisionListener.class)
+@SuppressFBWarnings(
+    value = {
+      "NP_NONNULL_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR",
+      "UUF_UNUSED_PUBLIC_OR_PROTECTED_FIELD"
+    },
+    justification = "JPA Entity")
 public class UsernameRevisionEntity {
   @Id
   @SequenceGenerator(

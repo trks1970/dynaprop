@@ -29,6 +29,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 class NamedUuidServiceTest {
 
   @Autowired @Nullable TestNamedUuidService service = null;
+
   @Autowired @Nullable JpaTestNamedUuidEntityRepository repository;
 
   @BeforeEach

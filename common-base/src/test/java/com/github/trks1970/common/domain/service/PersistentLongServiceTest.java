@@ -28,6 +28,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 class PersistentLongServiceTest {
 
   @Autowired @Nullable TestPersistentLongService service = null;
+
   @Autowired @Nullable JpaTestPersistentLongEntityRepository repository;
 
   @BeforeEach
