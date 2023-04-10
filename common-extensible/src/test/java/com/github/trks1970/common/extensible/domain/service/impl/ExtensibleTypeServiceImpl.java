@@ -1,6 +1,7 @@
 package com.github.trks1970.common.extensible.domain.service.impl;
 
 import com.github.trks1970.common.domain.repository.NamedTypeRepository;
+import com.github.trks1970.common.extensible.domain.exception.IntegrityViolationException;
 import com.github.trks1970.common.extensible.domain.model.TestExtensibleType;
 import com.github.trks1970.common.extensible.domain.model.propertytype.TestPropertyType;
 import com.github.trks1970.common.extensible.domain.repository.TestExtensibleTypeRepository;
@@ -8,12 +9,14 @@ import com.github.trks1970.common.extensible.domain.repository.propertytype.Prop
 import com.github.trks1970.common.extensible.domain.repository.propertytype.TestPropertyTypeRepository;
 import com.github.trks1970.common.extensible.domain.service.TestExtensibleTypeService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Component
+@Service
 @RequiredArgsConstructor
 @Transactional
+@Slf4j
 public class ExtensibleTypeServiceImpl implements TestExtensibleTypeService {
 
   private final TestExtensibleTypeRepository extensibleTypeRepository;
@@ -27,5 +30,13 @@ public class ExtensibleTypeServiceImpl implements TestExtensibleTypeService {
   @Override
   public PropertyTypeRepository<Long, TestPropertyType> propertyTypeRepository() {
     return propertyTypeRepository;
+  }
+
+  @Override
+  public TestExtensibleType save(TestExtensibleType extensibleType) {
+    if (isNameUnique(extensibleType)) {
+      return TestExtensibleTypeService.super.save(extensibleType);
+    }
+    throw new IntegrityViolationException("TestExtensibleTypeName not unique: " + extensibleType);
   }
 }

@@ -1,5 +1,6 @@
 package com.github.trks1970.common.extensible.infrastructure.entity.propertyvalue;
 
+import com.github.trks1970.common.extensible.domain.model.propertytype.PropertyTypes;
 import com.github.trks1970.common.extensible.infrastructure.entity.ExtensibleEntity;
 import com.github.trks1970.common.extensible.infrastructure.entity.ExtensibleTypeEntity;
 import com.github.trks1970.common.extensible.infrastructure.entity.propertytype.PropertyTypeEntity;
@@ -10,4 +11,10 @@ public interface StringPropertyValueEntity<
         ET extends ExtensibleTypeEntity<ID>,
         E extends ExtensibleEntity<ID, ET>,
         PT extends PropertyTypeEntity<ID, ET>>
-    extends PropertyValueEntity<ID, ET, E, PT> {}
+    extends PropertyValueEntity<ID, ET, E, PT> {
+
+  @Override
+  default PropertyTypes getType() {
+    return PropertyTypes.STRING;
+  }
+}

@@ -15,4 +15,9 @@ public interface NamedTypeService<ID extends Serializable, T extends Named<ID>>
   default Set<T> findByName(@Valid String name) {
     return repository().findByName(name);
   }
+
+  @Transactional
+  default boolean isNameUnique(T namedType) {
+    return repository().findByName(namedType.getName()).isEmpty();
+  }
 }

@@ -1,47 +1,24 @@
 package com.github.trks1970.common.extensible.domain.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import com.github.trks1970.common.extensible.TestJPAConfig;
+import com.github.trks1970.common.extensible.domain.exception.IntegrityViolationException;
 import com.github.trks1970.common.extensible.domain.model.TestExtensibleType;
 import com.github.trks1970.common.extensible.domain.model.propertytype.TestPropertyType;
-import com.github.trks1970.common.extensible.domain.model.propertytype.TestStringPropertyType;
+import com.github.trks1970.common.extensible.domain.model.propertytype.TestStringPropertyTypeType;
 import com.github.trks1970.common.extensible.domain.repository.TestExtensibleTypeRepository;
-import com.github.trks1970.common.extensible.domain.service.impl.ExtensibleTypeServiceImpl;
 import com.github.trks1970.common.extensible.infrastructure.entity.TestExtensibleTypeEntity;
-import com.github.trks1970.common.extensible.infrastructure.mapper.ExtensibleTypeReferenceMapper;
-import com.github.trks1970.common.extensible.infrastructure.mapper.TestExtensibleEntityMapperImpl;
-import com.github.trks1970.common.extensible.infrastructure.mapper.TestExtensibleTypeEntityMapperImpl;
-import com.github.trks1970.common.extensible.infrastructure.mapper.propertytype.TestPropertyTypeEntityMapper;
-import com.github.trks1970.common.extensible.infrastructure.mapper.propertytype.TestStringPropertyTypeEntityMapperImpl;
-import com.github.trks1970.common.extensible.infrastructure.repository.TestExtensibleTypeRepositoryImpl;
 import com.github.trks1970.common.extensible.infrastructure.repository.jpa.JpaTestExtensibleTypeEntityRepository;
-import com.github.trks1970.common.extensible.infrastructure.repository.propertytype.TestPropertyTypeRepositoryImpl;
 import com.github.trks1970.common.extensible.infrastructure.repository.propertytype.jpa.JpaTestPropertyTypeEntityRepository;
 import java.util.Objects;
 import java.util.Set;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.boot.test.context.SpringBootTest;
 
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(
-    classes = {
-      TestJPAConfig.class,
-      ExtensibleTypeServiceImpl.class,
-      TestExtensibleTypeRepositoryImpl.class,
-      TestPropertyTypeRepositoryImpl.class,
-      TestExtensibleEntityMapperImpl.class,
-      TestExtensibleTypeEntityMapperImpl.class,
-      TestPropertyTypeEntityMapper.class,
-      TestStringPropertyTypeEntityMapperImpl.class,
-      ExtensibleTypeReferenceMapper.class
-    })
-@Slf4j
+@SpringBootTest
 public class ExtensibleTypeServiceTest {
 
   @Autowired TestExtensibleTypeService service;
@@ -55,8 +32,6 @@ public class ExtensibleTypeServiceTest {
         .map(TestExtensibleTypeEntity::getId)
         .filter(Objects::nonNull)
         .forEach(id -> extensibleTypeRepository.deleteById(id));
-
-    log.debug("BeforeEach entities {}", jpaExtensibleTypeRepository.findAll().size());
   }
 
   @Test
@@ -116,7 +91,7 @@ public class ExtensibleTypeServiceTest {
     TestExtensibleType extensibleType =
         service.save(TestExtensibleType.builder().name("extensibleType").build());
     TestPropertyType propertyType =
-        TestStringPropertyType.builder()
+        TestStringPropertyTypeType.builder()
             .name("stringProperty")
             .extensibleTypeId(extensibleType.getId())
             .build();
@@ -133,7 +108,7 @@ public class ExtensibleTypeServiceTest {
     TestExtensibleType extensibleType =
         service.save(TestExtensibleType.builder().name("extensibleType").build());
     TestPropertyType propertyType =
-        TestStringPropertyType.builder()
+        TestStringPropertyTypeType.builder()
             .name("stringProperty")
             .extensibleTypeId(extensibleType.getId())
             .build();
@@ -152,12 +127,20 @@ public class ExtensibleTypeServiceTest {
     TestExtensibleType extensibleType = TestExtensibleType.builder().name("extensibleType").build();
     extensibleType = service.save(extensibleType);
     TestPropertyType propertyType =
-        TestStringPropertyType.builder()
+        TestStringPropertyTypeType.builder()
             .name("stringProperty")
             .extensibleTypeId(extensibleType.getId())
             .build();
 
     service.addPropertyType(propertyType);
     service.deleteById(extensibleType.getId());
+  }
+
+  @Test
+  void testNameNotUnique() {
+    service.save(TestExtensibleType.builder().name("extensibleType").build());
+    assertThatThrownBy(
+            () -> service.save(TestExtensibleType.builder().name("extensibleType").build()))
+        .isInstanceOf(IntegrityViolationException.class);
   }
 }

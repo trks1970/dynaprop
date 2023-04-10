@@ -1,6 +1,6 @@
 package com.github.trks1970.common.extensible.infrastructure.mapper.propertytype;
 
-import com.github.trks1970.common.extensible.domain.model.propertytype.TestStringPropertyType;
+import com.github.trks1970.common.extensible.domain.model.propertytype.TestStringPropertyTypeType;
 import com.github.trks1970.common.extensible.infrastructure.entity.TestExtensibleTypeEntity;
 import com.github.trks1970.common.extensible.infrastructure.entity.propertytype.TestStringPropertyTypeEntity;
 import com.github.trks1970.common.extensible.infrastructure.mapper.ExtensibleTypeReferenceMapper;
@@ -12,24 +12,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 @Mapper
 public abstract class TestStringPropertyTypeEntityMapper
-    implements EntityMapper<Long, TestStringPropertyType, TestStringPropertyTypeEntity> {
+    implements EntityMapper<Long, TestStringPropertyTypeType, TestStringPropertyTypeEntity> {
 
   @Autowired private ExtensibleTypeReferenceMapper extensibleTypeReferenceMapper;
 
   @Override
   @Mapping(target = "extensibleTypeId", source = "extensibleType.id")
-  public abstract TestStringPropertyType toDomain(TestStringPropertyTypeEntity entity);
+  public abstract TestStringPropertyTypeType toDomain(TestStringPropertyTypeEntity entity);
 
   @Override
   @Mapping(target = "revision", ignore = true)
   @Mapping(target = "extensibleType", source = "extensibleTypeId")
-  public abstract TestStringPropertyTypeEntity toEntity(TestStringPropertyType type);
+  public abstract TestStringPropertyTypeEntity toEntity(TestStringPropertyTypeType type);
 
   @Override
   @Mapping(target = "revision", ignore = true)
   @Mapping(target = "extensibleType", source = "extensibleTypeId")
   public abstract TestStringPropertyTypeEntity toEntity(
-      TestStringPropertyType type, @MappingTarget TestStringPropertyTypeEntity entity);
+      TestStringPropertyTypeType type, @MappingTarget TestStringPropertyTypeEntity entity);
 
   protected TestExtensibleTypeEntity mapExtensibleTypeId(Long extensibleTypeId) {
     return extensibleTypeReferenceMapper.map(extensibleTypeId);

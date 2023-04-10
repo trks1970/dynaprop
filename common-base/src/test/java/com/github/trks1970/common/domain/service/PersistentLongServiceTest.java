@@ -83,6 +83,6 @@ class PersistentLongServiceTest {
 
     service.deleteById(persistent2.getId());
 
-    assertThat(repository.findAll().size()).isEqualTo(1);
+    assertThat(repository.findAll()).hasSize(1);
   }
 }

@@ -7,8 +7,8 @@ import org.springframework.lang.NonNull;
 
 @Value
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@Builder
-public class TestStringPropertyType implements TestPropertyType, StringProperty<Long> {
+@Builder(toBuilder = true)
+public class TestStringPropertyTypeType implements TestPropertyType, StringPropertyType<Long> {
   Long id;
   @NonNull @lombok.NonNull @EqualsAndHashCode.Include String name;
   String description;

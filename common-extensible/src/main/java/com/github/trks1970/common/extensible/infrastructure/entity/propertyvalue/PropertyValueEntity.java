@@ -1,5 +1,6 @@
 package com.github.trks1970.common.extensible.infrastructure.entity.propertyvalue;
 
+import com.github.trks1970.common.extensible.domain.model.propertytype.PropertyTypes;
 import com.github.trks1970.common.extensible.infrastructure.entity.ExtensibleEntity;
 import com.github.trks1970.common.extensible.infrastructure.entity.ExtensibleTypeEntity;
 import com.github.trks1970.common.extensible.infrastructure.entity.propertytype.PropertyTypeEntity;
@@ -21,4 +22,6 @@ public interface PropertyValueEntity<
   E getExtensible();
 
   PropertyValueEntity<ID, ET, E, PT> setExtensible(E extensible);
+
+  PropertyTypes getType();
 }

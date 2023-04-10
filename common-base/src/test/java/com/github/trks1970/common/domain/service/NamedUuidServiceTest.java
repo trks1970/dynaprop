@@ -82,7 +82,7 @@ class NamedUuidServiceTest {
 
     service.deleteById(persistent2.getId());
 
-    assertThat(repository.findAll().size()).isEqualTo(1);
+    assertThat(repository.findAll()).hasSize(1);
   }
 
   @Test
@@ -91,7 +91,7 @@ class NamedUuidServiceTest {
 
     Set<TestNamedUuid> found = service.findByName("persistent1");
 
-    assertThat(found.size()).isEqualTo(1);
+    assertThat(found).hasSize(1);
     assertThat(found.iterator().next()).usingRecursiveComparison().isEqualTo(persistent);
   }
 

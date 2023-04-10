@@ -3,15 +3,14 @@ package com.github.trks1970.common.extensible.infrastructure.repository;
 import com.github.trks1970.common.extensible.domain.model.TestExtensibleType;
 import com.github.trks1970.common.extensible.domain.repository.TestExtensibleTypeRepository;
 import com.github.trks1970.common.extensible.infrastructure.entity.TestExtensibleTypeEntity;
-import com.github.trks1970.common.extensible.infrastructure.entity.propertytype.TestPropertyTypeEntity_;
 import com.github.trks1970.common.extensible.infrastructure.mapper.TestExtensibleTypeEntityMapper;
 import com.github.trks1970.common.extensible.infrastructure.repository.jpa.JpaTestExtensibleTypeEntityRepository;
 import com.github.trks1970.common.extensible.infrastructure.repository.jpa.specification.TestExtensibleTypeSpecification;
 import com.github.trks1970.common.extensible.infrastructure.repository.propertytype.jpa.JpaTestPropertyTypeEntityRepository;
 import com.github.trks1970.common.extensible.infrastructure.repository.propertytype.jpa.specification.TestPropertyTypeSpecification;
-import com.github.trks1970.common.infrastructure.entity.PersistentEntity;
 import com.github.trks1970.common.infrastructure.mapper.EntityMapper;
 import com.github.trks1970.common.infrastructure.repository.jpa.JpaBaseRepository;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -32,16 +31,14 @@ public class TestExtensibleTypeRepositoryImpl
 
   @Override
   public void deleteById(Long extensibleTypeId) {
-    Set<Long> propertyTypeIds =
-        jpaTestPropertyTypeEntityRepository
-            .findBy(
+    Set<IdProjection> propertyTypeIds =
+        new HashSet<>(
+            jpaTestPropertyTypeEntityRepository.findBy(
                 TestPropertyTypeSpecification.extensibleTypeId(extensibleTypeId),
                 fetchableFluentQuery ->
-                    fetchableFluentQuery.project(TestPropertyTypeEntity_.ID).all())
-            .stream()
-            .map(PersistentEntity::getId)
-            .collect(Collectors.toSet());
-    jpaTestPropertyTypeEntityRepository.deleteAllById(propertyTypeIds);
+                    fetchableFluentQuery.as(IdProjection.class).project("id").all()));
+    jpaTestPropertyTypeEntityRepository.deleteAllById(
+        propertyTypeIds.stream().map(IdProjection::getId).collect(Collectors.toSet()));
     repository().deleteById(extensibleTypeId);
   }
 
