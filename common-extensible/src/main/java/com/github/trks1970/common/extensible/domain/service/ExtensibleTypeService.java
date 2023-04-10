@@ -8,4 +8,5 @@ import org.springframework.validation.annotation.Validated;
 
 @Validated
 @Transactional
-public abstract class ExtensibleTypeService<ID extends Serializable, T extends Named<ID>> extends NamedTypeService<ID, T> {}
+public abstract class ExtensibleTypeService<ID extends Serializable, T extends Named<ID>>
+    extends NamedTypeService<ID, T> {}

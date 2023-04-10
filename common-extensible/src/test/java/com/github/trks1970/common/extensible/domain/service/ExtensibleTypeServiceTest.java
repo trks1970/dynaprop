@@ -6,11 +6,5 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(
-    classes = {
-        TestJPAConfig.class
-    })
-
-public class ExtensibleTypeServiceTest {
-
-}
+@ContextConfiguration(classes = {TestJPAConfig.class})
+public class ExtensibleTypeServiceTest {}

@@ -17,7 +17,7 @@ import org.springframework.lang.Nullable;
 @Table(name = "extensible_type")
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class TestExtensibleTypeEntity implements ExtensibleTypeEntity<Long>{
+public class TestExtensibleTypeEntity implements ExtensibleTypeEntity<Long> {
   @Id
   @SequenceGenerator(
       name = "seq_extensible_type",

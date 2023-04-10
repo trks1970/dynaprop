@@ -7,21 +7,11 @@ import org.springframework.lang.NonNull;
 
 @Value
 @Builder
-public class TestStringPropertyValue implements StringPropertyValue<Long> {
+public class TestStringPropertyValue implements TestPropertyValue, StringPropertyValue<Long> {
   Long id;
-  @NonNull
-  @lombok.NonNull
-  @EqualsAndHashCode.Include
-  String name;
+  @NonNull @lombok.NonNull @EqualsAndHashCode.Include String name;
   String description;
-  @NonNull
-  @lombok.NonNull
-  @EqualsAndHashCode.Include
-  Long propertyTypeId;
-  @NonNull
-  @lombok.NonNull
-  @EqualsAndHashCode.Include
-  Long extensibleId;
-  @EqualsAndHashCode.Include
-  Object valueObject;
+  @NonNull @lombok.NonNull @EqualsAndHashCode.Include Long propertyTypeId;
+  @NonNull @lombok.NonNull @EqualsAndHashCode.Include Long extensibleId;
+  @EqualsAndHashCode.Include Object valueObject;
 }

@@ -1,21 +1,43 @@
 package com.github.trks1970.common.extensible.infrastructure.mapper.propertytype;
 
 import com.github.trks1970.common.extensible.domain.model.propertytype.TestPropertyType;
-import com.github.trks1970.common.extensible.infrastructure.entity.TestExtensibleTypeEntity;
+import com.github.trks1970.common.extensible.domain.model.propertytype.TestStringPropertyType;
 import com.github.trks1970.common.extensible.infrastructure.entity.propertytype.TestPropertyTypeEntity;
+import com.github.trks1970.common.extensible.infrastructure.entity.propertytype.TestStringPropertyTypeEntity;
 import com.github.trks1970.common.infrastructure.mapper.EntityMapper;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
-@Mapper
-public interface TestPropertyTypeEntityMapper extends EntityMapper<Long, TestPropertyType, TestPropertyTypeEntity> {
+@Component
+@RequiredArgsConstructor
+public class TestPropertyTypeEntityMapper
+    implements EntityMapper<Long, TestPropertyType, TestPropertyTypeEntity> {
+
+  private final TestStringPropertyTypeEntityMapper testStringPropertyTypeEntityMapper;
 
   @Override
-  @Mapping(target = "revision", ignore = true)
-  TestPropertyTypeEntity toEntity(TestPropertyType type);
+  public TestPropertyType toDomain(TestPropertyTypeEntity entity) {
+    return switch (entity.getType()) {
+      case STRING -> testStringPropertyTypeEntityMapper.toDomain(
+          (TestStringPropertyTypeEntity) entity);
+      case BOOLEAN -> throw new IllegalStateException();
+    };
+  }
 
   @Override
-  @Mapping(target = "revision", ignore = true)
-  TestPropertyTypeEntity toEntity(TestPropertyType type, @MappingTarget TestPropertyTypeEntity entity);
+  public TestPropertyTypeEntity toEntity(TestPropertyType type) {
+    return switch (type.getType()) {
+      case STRING -> testStringPropertyTypeEntityMapper.toEntity((TestStringPropertyType) type);
+      case BOOLEAN -> throw new IllegalStateException();
+    };
+  }
+
+  @Override
+  public TestPropertyTypeEntity toEntity(TestPropertyType type, TestPropertyTypeEntity entity) {
+    return switch (type.getType()) {
+      case STRING -> testStringPropertyTypeEntityMapper.toEntity(
+          (TestStringPropertyType) type, (TestStringPropertyTypeEntity) entity);
+      case BOOLEAN -> throw new IllegalStateException();
+    };
+  }
 }

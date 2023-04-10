@@ -10,5 +10,5 @@ public interface ExtensibleRepository<
         ID extends Serializable, PV extends PropertyValue<ID>, T extends Extensible<ID>>
     extends PersistentTypeRepository<ID, T> {
 
-  Set<PV> getPropertyValues();
+  Set<PV> getPropertyValues(ID extensibleId);
 }

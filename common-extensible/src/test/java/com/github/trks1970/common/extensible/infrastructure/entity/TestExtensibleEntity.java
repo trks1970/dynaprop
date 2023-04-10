@@ -1,6 +1,5 @@
 package com.github.trks1970.common.extensible.infrastructure.entity;
 
-import com.github.trks1970.common.extensible.domain.model.Extensible;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,6 +13,7 @@ import jakarta.persistence.Version;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.lang.Nullable;
+
 @Entity
 @Table(name = "extensible")
 @Data
@@ -35,6 +35,6 @@ public class TestExtensibleEntity implements ExtensibleEntity<Long, TestExtensib
   private Long revision;
 
   @ManyToOne
-  @JoinColumn(name="extensible_type_id")
+  @JoinColumn(name = "extensible_type_id")
   private TestExtensibleTypeEntity extensibleType;
 }

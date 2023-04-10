@@ -2,7 +2,6 @@ package com.github.trks1970.common.extensible.infrastructure.entity.propertyvalu
 
 import com.github.trks1970.common.extensible.infrastructure.entity.TestExtensibleEntity;
 import com.github.trks1970.common.extensible.infrastructure.entity.TestExtensibleTypeEntity;
-import com.github.trks1970.common.extensible.infrastructure.entity.propertytype.PropertyTypeEntity;
 import com.github.trks1970.common.extensible.infrastructure.entity.propertytype.TestPropertyTypeEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -18,15 +17,19 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Version;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NonNull;
+import lombok.experimental.Accessors;
 import org.springframework.lang.Nullable;
 
 @Entity
 @Table(name = "property_value")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Data
+@Accessors(chain = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public abstract class TestPropertyValueEntity implements PropertyValueEntity<Long, TestExtensibleTypeEntity, TestExtensibleEntity, TestPropertyTypeEntity> {
+public abstract class TestPropertyValueEntity
+    implements PropertyValueEntity<
+        Long, TestExtensibleTypeEntity, TestExtensibleEntity, TestPropertyTypeEntity> {
+
   @Id
   @SequenceGenerator(
       name = "seq_property_value",
@@ -44,7 +47,6 @@ public abstract class TestPropertyValueEntity implements PropertyValueEntity<Lon
 
   @Column(name = "name", unique = true, nullable = false)
   @EqualsAndHashCode.Include
-  @NonNull
   private String name;
 
   @Column(name = "description")
@@ -52,11 +54,10 @@ public abstract class TestPropertyValueEntity implements PropertyValueEntity<Lon
   private String description;
 
   @ManyToOne
-  @JoinColumn(name="property_type_id")
+  @JoinColumn(name = "property_type_id")
   private TestPropertyTypeEntity propertyType;
 
   @ManyToOne
-  @JoinColumn(name="extensible_id")
+  @JoinColumn(name = "extensible_id")
   private TestExtensibleEntity extensible;
-
 }

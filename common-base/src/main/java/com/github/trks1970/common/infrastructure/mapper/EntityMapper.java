@@ -5,10 +5,10 @@ import com.github.trks1970.common.infrastructure.entity.PersistentEntity;
 import java.io.Serializable;
 
 public interface EntityMapper<
-    ID extends Serializable, T extends Persistent<ID>, E extends PersistentEntity<ID>> {
-  T toDomain(E entity);
+    ID extends Serializable, D extends Persistent<ID>, E extends PersistentEntity<ID>> {
+  D toDomain(E entity);
 
-  E toEntity(T type);
+  E toEntity(D type);
 
-  E toEntity(T type, E entity);
+  E toEntity(D type, E entity);
 }

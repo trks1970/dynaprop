@@ -10,9 +10,6 @@ import org.springframework.lang.NonNull;
 @Builder
 public class TestExtensibleType implements ExtensibleType<Long> {
   Long id;
-  @NonNull
-  @lombok.NonNull
-  @EqualsAndHashCode.Include
-  String name;
+  @NonNull @lombok.NonNull @EqualsAndHashCode.Include String name;
   String description;
 }

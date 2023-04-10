@@ -5,6 +5,4 @@ import org.springframework.validation.annotation.Validated;
 
 @Validated
 @Transactional
-public class PropertyValueService {
-
-}
+public class PropertyValueService {}

@@ -8,7 +8,8 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
 @Mapper
-public interface TestExtensibleTypeEntityMapper extends EntityMapper<Long, TestExtensibleType, TestExtensibleTypeEntity> {
+public interface TestExtensibleTypeEntityMapper
+    extends EntityMapper<Long, TestExtensibleType, TestExtensibleTypeEntity> {
 
   @Override
   @Mapping(target = "revision", ignore = true)
@@ -16,5 +17,6 @@ public interface TestExtensibleTypeEntityMapper extends EntityMapper<Long, TestE
 
   @Override
   @Mapping(target = "revision", ignore = true)
-  TestExtensibleTypeEntity toEntity(TestExtensibleType type, @MappingTarget TestExtensibleTypeEntity entity);
+  TestExtensibleTypeEntity toEntity(
+      TestExtensibleType type, @MappingTarget TestExtensibleTypeEntity entity);
 }

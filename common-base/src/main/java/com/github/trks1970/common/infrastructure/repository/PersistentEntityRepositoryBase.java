@@ -24,38 +24,38 @@ public abstract class PersistentEntityRepositoryBase<
 
   @Override
   public T save(T item) {
-    log.debug("Saving {}, {}", item.getClass().getName(), item);
+    log.trace("Saving {}, {}", item.getClass().getName(), item);
     E itemEntity;
     if (item.getId() == null) {
       itemEntity = repository().save(mapper().toEntity(item));
     } else {
       itemEntity = repository().save(mapper().toEntity(item, findEntityById(item.getId())));
     }
-    log.debug("Saved as entity {}", itemEntity);
+    log.trace("Saved as entity {}", itemEntity);
     return toDomain(itemEntity);
   }
 
   @Override
   public T findById(ID id) throws NotFoundException {
-    log.debug("Finding by id {}", id);
+    log.trace("Finding by id {}", id);
     return toDomain(findEntityById(id));
   }
 
   @Override
   public List<T> findAllById(Set<ID> ids) throws NotFoundException {
-    log.debug("Finding by ids {}", ids);
+    log.trace("Finding by ids {}", ids);
     return repository().findAllById(ids).stream().map(this::toDomain).toList();
   }
 
   @Override
   public void deleteById(ID id) {
-    log.debug("Deleting by id {}", id);
+    log.trace("Deleting by id {}", id);
     repository().deleteById(id);
   }
 
   @NonNull
   public E findEntityById(@NonNull ID id) {
-    log.debug("Finding entity by id {}", id);
+    log.trace("Finding entity by id {}", id);
     return repository().findById(id).orElseThrow(() -> notFoundException(id, null, null));
   }
 

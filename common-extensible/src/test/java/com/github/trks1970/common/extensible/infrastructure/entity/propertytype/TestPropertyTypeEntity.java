@@ -15,15 +15,17 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Version;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NonNull;
+import lombok.experimental.Accessors;
 import org.springframework.lang.Nullable;
 
 @Entity
 @Table(name = "property_type")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Data
+@Accessors(chain = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public abstract class TestPropertyTypeEntity implements PropertyTypeEntity<Long, TestExtensibleTypeEntity> {
+public abstract class TestPropertyTypeEntity
+    implements PropertyTypeEntity<Long, TestExtensibleTypeEntity> {
   @Id
   @SequenceGenerator(
       name = "seq_property_type",
@@ -41,7 +43,6 @@ public abstract class TestPropertyTypeEntity implements PropertyTypeEntity<Long,
 
   @Column(name = "name", unique = true, nullable = false)
   @EqualsAndHashCode.Include
-  @NonNull
   private String name;
 
   @Column(name = "description")

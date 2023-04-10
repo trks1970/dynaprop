@@ -8,15 +8,9 @@ import org.springframework.lang.NonNull;
 @Value
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Builder
-public class TestBooleanPropertyType implements BooleanProperty<Long> {
+public class TestBooleanPropertyType implements TestPropertyType, BooleanProperty<Long> {
   Long id;
-  @NonNull
-  @lombok.NonNull
-  @EqualsAndHashCode.Include
-  String name;
+  @NonNull @lombok.NonNull @EqualsAndHashCode.Include String name;
   String description;
-  @NonNull
-  @lombok.NonNull
-  @EqualsAndHashCode.Include
-  Long extensibleTypeId;
+  @NonNull @lombok.NonNull @EqualsAndHashCode.Include Long extensibleTypeId;
 }

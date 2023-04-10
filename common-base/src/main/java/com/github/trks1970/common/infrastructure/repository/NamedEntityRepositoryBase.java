@@ -14,12 +14,12 @@ public abstract class NamedEntityRepositoryBase<
         ID extends Serializable, T extends Named<ID>, E extends NamedEntity<ID>>
     extends PersistentEntityRepositoryBase<ID, T, E> implements NamedTypeRepository<ID, T> {
 
-  protected abstract Specification<E> nameSpecification(String name);
+  protected abstract Specification<E> name(String name);
 
   @Override
   public Set<T> findByName(String name) {
-    log.debug("{} finding by name {}", getClass().getName(), name);
-    return repository().findAll(nameSpecification(name)).stream()
+    log.trace("{} finding by name {}", getClass().getName(), name);
+    return repository().findAll(name(name)).stream()
         .map(this::toDomain)
         .collect(Collectors.toSet());
   }

@@ -1,5 +1,6 @@
 package com.github.trks1970.common.extensible.infrastructure.entity.propertytype;
 
+import com.github.trks1970.common.extensible.domain.model.propertytype.PropertyTypes;
 import com.github.trks1970.common.extensible.infrastructure.entity.ExtensibleTypeEntity;
 import com.github.trks1970.common.infrastructure.entity.NamedEntity;
 import java.io.Serializable;
@@ -9,4 +10,6 @@ public interface PropertyTypeEntity<ID extends Serializable, E extends Extensibl
   E getExtensibleType();
 
   PropertyTypeEntity<ID, E> setExtensibleType(E extensibleType);
+
+  PropertyTypes getType();
 }

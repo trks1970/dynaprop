@@ -44,7 +44,7 @@ public class TestNamedUuidEntityRepositoryImpl
   }
 
   @Override
-  protected Specification<TestNamedUuidEntity> nameSpecification(String name) {
+  protected Specification<TestNamedUuidEntity> name(String name) {
     return TestNamedUuidEntitySpecification.name(name);
   }
 }
