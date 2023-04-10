@@ -2,47 +2,27 @@ package com.github.trks1970.common.extensible.infrastructure.repository.property
 
 import com.github.trks1970.common.extensible.domain.model.propertytype.PropertyType;
 import com.github.trks1970.common.extensible.domain.repository.propertytype.PropertyTypeRepository;
-import com.github.trks1970.common.extensible.infrastructure.entity.ExtensibleEntity;
 import com.github.trks1970.common.extensible.infrastructure.entity.ExtensibleTypeEntity;
 import com.github.trks1970.common.extensible.infrastructure.entity.propertytype.PropertyTypeEntity;
-import com.github.trks1970.common.extensible.infrastructure.entity.propertyvalue.PropertyValueEntity;
 import com.github.trks1970.common.infrastructure.repository.NamedEntityRepositoryBase;
-import com.github.trks1970.common.infrastructure.repository.jpa.JpaBaseRepository;
 import java.io.Serializable;
+import java.util.Set;
+import java.util.stream.Collectors;
 import org.springframework.data.jpa.domain.Specification;
 
 public abstract class PropertyTypeRepositoryBase<
         ID extends Serializable,
         PT extends PropertyType<ID>,
         ETE extends ExtensibleTypeEntity<ID>,
-        EE extends ExtensibleEntity<ID, ETE>,
-        PE extends PropertyTypeEntity<ID, ETE>,
-        VE extends PropertyValueEntity<ID, ETE, EE, PE>>
-    extends NamedEntityRepositoryBase<ID, PT, PE> implements PropertyTypeRepository<ID, PT> {
+        PTE extends PropertyTypeEntity<ID, ETE>>
+    extends NamedEntityRepositoryBase<ID, PT, PTE> implements PropertyTypeRepository<ID, PT> {
 
-  protected abstract JpaBaseRepository<ETE, ID, Long> extensibleTypeEntityRepository();
-
-  protected abstract JpaBaseRepository<VE, ID, Long> propertyValueEntityRepository();
-
-  protected abstract Specification<VE> propertyType(ID propertyTypeId);
+  protected abstract Specification<PTE> extensibleType(ID extensibleTypeId);
 
   @Override
-  @SuppressWarnings("unchecked")
-  public void addToType(ID extensibleTypeId, PT propertyType) {
-    repository()
-        .save(
-            (PE)
-                mapper()
-                    .toEntity(propertyType)
-                    .setExtensibleType(
-                        extensibleTypeEntityRepository()
-                            .findById(extensibleTypeId)
-                            .orElseThrow(() -> notFoundException(extensibleTypeId, null, null))));
-  }
-
-  @Override
-  public void deleteById(ID id) {
-    propertyValueEntityRepository().delete(propertyType(id));
-    repository().deleteById(id);
+  public Set<PT> getPropertyTypes(ID extensibleTypeId) {
+    return repository().findAll(extensibleType(extensibleTypeId)).stream()
+        .map(pte -> mapper().toDomain(pte))
+        .collect(Collectors.toSet());
   }
 }

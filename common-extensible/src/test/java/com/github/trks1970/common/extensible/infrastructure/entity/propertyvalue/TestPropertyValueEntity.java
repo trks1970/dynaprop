@@ -53,11 +53,11 @@ public abstract class TestPropertyValueEntity
   @Nullable
   private String description;
 
-  @ManyToOne
+  @ManyToOne(optional = false)
   @JoinColumn(name = "property_type_id")
   private TestPropertyTypeEntity propertyType;
 
-  @ManyToOne
+  @ManyToOne(optional = false)
   @JoinColumn(name = "extensible_id")
   private TestExtensibleEntity extensible;
 }

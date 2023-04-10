@@ -6,15 +6,13 @@ import jakarta.validation.Valid;
 import java.io.Serializable;
 import java.util.Set;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.annotation.Validated;
 
-@Validated
-@Transactional
-public abstract class NamedTypeService<ID extends Serializable, T extends Named<ID>>
+public interface NamedTypeService<ID extends Serializable, T extends Named<ID>>
     extends PersistentTypeService<ID, T> {
-  protected abstract NamedTypeRepository<ID, T> repository();
+  NamedTypeRepository<ID, T> repository();
 
-  public Set<T> findByName(@Valid String name) {
+  @Transactional
+  default Set<T> findByName(@Valid String name) {
     return repository().findByName(name);
   }
 }

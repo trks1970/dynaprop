@@ -10,12 +10,13 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Version;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NonNull;
+import lombok.NoArgsConstructor;
 import org.springframework.lang.Nullable;
 
 @Entity
 @Table(name = "extensible_type")
 @Data
+@NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class TestExtensibleTypeEntity implements ExtensibleTypeEntity<Long> {
   @Id
@@ -35,7 +36,6 @@ public class TestExtensibleTypeEntity implements ExtensibleTypeEntity<Long> {
 
   @Column(name = "name", unique = true, nullable = false)
   @EqualsAndHashCode.Include
-  @NonNull
   private String name;
 
   @Column(name = "description")

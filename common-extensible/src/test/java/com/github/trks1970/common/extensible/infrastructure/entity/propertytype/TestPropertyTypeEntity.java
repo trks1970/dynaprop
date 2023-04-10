@@ -49,7 +49,7 @@ public abstract class TestPropertyTypeEntity
   @Nullable
   private String description;
 
-  @ManyToOne
+  @ManyToOne(optional = false)
   @JoinColumn(name = "extensible_type_id")
   private TestExtensibleTypeEntity extensibleType;
 }

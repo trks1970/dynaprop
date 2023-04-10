@@ -7,7 +7,7 @@ import org.springframework.lang.NonNull;
 
 @Value
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@Builder
+@Builder(toBuilder = true)
 public class TestExtensibleType implements ExtensibleType<Long> {
   Long id;
   @NonNull @lombok.NonNull @EqualsAndHashCode.Include String name;

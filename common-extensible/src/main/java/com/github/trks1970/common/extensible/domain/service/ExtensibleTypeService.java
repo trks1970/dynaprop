@@ -1,12 +1,31 @@
 package com.github.trks1970.common.extensible.domain.service;
 
-import com.github.trks1970.common.domain.model.Named;
 import com.github.trks1970.common.domain.service.NamedTypeService;
+import com.github.trks1970.common.extensible.domain.model.ExtensibleType;
+import com.github.trks1970.common.extensible.domain.model.propertytype.PropertyType;
+import com.github.trks1970.common.extensible.domain.repository.propertytype.PropertyTypeRepository;
 import java.io.Serializable;
+import java.util.Set;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.annotation.Validated;
 
-@Validated
-@Transactional
-public abstract class ExtensibleTypeService<ID extends Serializable, T extends Named<ID>>
-    extends NamedTypeService<ID, T> {}
+public interface ExtensibleTypeService<
+        ID extends Serializable, PT extends PropertyType<ID>, ET extends ExtensibleType<ID>>
+    extends NamedTypeService<ID, ET> {
+
+  PropertyTypeRepository<ID, PT> propertyTypeRepository();
+
+  @Transactional
+  default Set<PT> getPropertyTypes(ID extensibleTypeId) {
+    return propertyTypeRepository().getPropertyTypes(extensibleTypeId);
+  }
+
+  @Transactional
+  default PT addPropertyType(PT propertyType) {
+    return propertyTypeRepository().save(propertyType);
+  }
+
+  @Transactional
+  default void removePropertyType(PT propertyType) {
+    propertyTypeRepository().deleteById(propertyType.getId());
+  }
+}

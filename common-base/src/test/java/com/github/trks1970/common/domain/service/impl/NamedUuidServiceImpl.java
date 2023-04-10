@@ -1,8 +1,9 @@
-package com.github.trks1970.common.domain.service;
+package com.github.trks1970.common.domain.service.impl;
 
 import com.github.trks1970.common.domain.model.TestNamedUuid;
 import com.github.trks1970.common.domain.repository.NamedTypeRepository;
 import com.github.trks1970.common.domain.repository.TestNamedUuidRepository;
+import com.github.trks1970.common.domain.service.NamedUuidService;
 import java.util.Optional;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -13,12 +14,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class TestNamedUuidService extends NamedTypeService<UUID, TestNamedUuid> {
+public class NamedUuidServiceImpl implements NamedUuidService {
 
   private final TestNamedUuidRepository repository;
 
   @Override
-  protected NamedTypeRepository<UUID, TestNamedUuid> repository() {
+  public NamedTypeRepository<UUID, TestNamedUuid> repository() {
     return repository;
   }
 
