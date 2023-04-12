@@ -11,7 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class PersistentLongServiceImpl implements PersistentLongService {
+public class PersistentLongServiceImpl
+    extends AbstractPersistentTypeService<Long, TestIPersistentLong>
+    implements PersistentLongService {
   private final TestPersistentLongRepository repository;
 
   @Override

@@ -30,11 +30,15 @@ public abstract class NamedEntityRepositoryBase<
 
   @Override
   public T save(T item) {
-
-    if (repository().findByName(item.getName()).isEmpty()) {
+    if (isNameUnique(item.getName())) {
       return super.save(item);
     }
     throw new IntegrityViolationException(
         item.getClass() + " name [" + item.getName() + "] is not unique");
+  }
+
+  @Override
+  public boolean isNameUnique(String name) {
+    return repository().findIdByName(name).isEmpty();
   }
 }

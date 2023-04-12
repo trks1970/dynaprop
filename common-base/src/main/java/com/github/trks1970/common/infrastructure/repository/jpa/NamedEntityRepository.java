@@ -8,5 +8,5 @@ import org.springframework.data.repository.NoRepositoryBean;
 @NoRepositoryBean
 public interface NamedEntityRepository<T, ID extends Serializable, R extends Number & Comparable<R>>
     extends JpaBaseRepository<T, ID, R> {
-  Optional<IdProjection<ID>> findByName(String name);
+  Optional<IdProjection<ID>> findIdByName(String name);
 }

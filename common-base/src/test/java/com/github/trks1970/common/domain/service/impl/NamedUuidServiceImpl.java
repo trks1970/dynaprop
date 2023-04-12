@@ -14,7 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class NamedUuidServiceImpl implements NamedUuidService {
+public class NamedUuidServiceImpl extends AbstractNamedTypeService<UUID, TestINamedUuid>
+    implements NamedUuidService {
 
   private final TestNamedUuidRepository repository;
 

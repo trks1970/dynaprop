@@ -7,8 +7,10 @@ import com.github.trks1970.common.extensible.infrastructure.entity.IExtensibleTy
 import com.github.trks1970.common.extensible.infrastructure.entity.propertytype.IPropertyTypeEntity;
 import com.github.trks1970.common.extensible.infrastructure.entity.propertyvalue.IPropertyValueEntity;
 import com.github.trks1970.common.infrastructure.repository.NamedEntityRepositoryBase;
-import com.github.trks1970.common.infrastructure.repository.jpa.JpaBaseRepository;
 import java.io.Serializable;
+import java.util.Set;
+import java.util.stream.Collectors;
+import org.springframework.data.jpa.domain.Specification;
 
 public abstract class PropertyValueRepositoryBase<
         ID extends Serializable,
@@ -16,22 +18,15 @@ public abstract class PropertyValueRepositoryBase<
         EE extends IExtensibleEntity<ID, ETE>,
         VT extends IPropertyValue<ID>,
         PTE extends IPropertyTypeEntity<ID, ETE>,
-        VE extends IPropertyValueEntity<ID, ETE, EE, PTE>>
-    extends NamedEntityRepositoryBase<ID, VT, VE> implements PropertyValueRepository<ID, VT> {
+        PVE extends IPropertyValueEntity<ID, ETE, EE, PTE>>
+    extends NamedEntityRepositoryBase<ID, VT, PVE> implements PropertyValueRepository<ID, VT> {
 
-  protected abstract JpaBaseRepository<EE, ID, Long> extensibleEntityRepository();
+  protected abstract Specification<PVE> extensibleId(ID extensibleId);
 
   @Override
-  @SuppressWarnings("unchecked")
-  public void addToExtensible(ID extensibleId, VT propertyValue) {
-    repository()
-        .save(
-            (VE)
-                mapper()
-                    .toEntity(propertyValue)
-                    .setExtensible(
-                        extensibleEntityRepository()
-                            .findById(extensibleId)
-                            .orElseThrow(() -> notFoundException(extensibleId, null, null))));
+  public Set<VT> getPropertyValues(ID extensibleId) {
+    return repository().findAll(extensibleId(extensibleId)).stream()
+        .map(pte -> mapper().toDomain(pte))
+        .collect(Collectors.toSet());
   }
 }

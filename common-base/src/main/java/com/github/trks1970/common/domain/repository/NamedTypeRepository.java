@@ -8,4 +8,6 @@ public interface NamedTypeRepository<ID extends Serializable, T extends INamed<I
     extends PersistentTypeRepository<ID, T> {
 
   Set<T> findByName(String name);
+
+  boolean isNameUnique(String name);
 }

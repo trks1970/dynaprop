@@ -6,11 +6,9 @@ import com.github.trks1970.common.extensible.infrastructure.entity.DefaultExtens
 import com.github.trks1970.common.extensible.infrastructure.entity.propertytype.DefaultPropertyTypeEntity;
 import com.github.trks1970.common.extensible.infrastructure.entity.propertyvalue.DefaultPropertyValueEntity;
 import com.github.trks1970.common.extensible.infrastructure.mapper.propertyvalue.DefaultPropertyValueEntityMapper;
-import com.github.trks1970.common.extensible.infrastructure.repository.jpa.JpaDefaultExtensibleEntityRepository;
 import com.github.trks1970.common.extensible.infrastructure.repository.propertyvalue.jpa.JpaDefaultPropertyValueEntityRepository;
 import com.github.trks1970.common.extensible.infrastructure.repository.propertyvalue.jpa.specification.DefaultPropertyValueEntitySpecification;
 import com.github.trks1970.common.infrastructure.mapper.EntityMapper;
-import com.github.trks1970.common.infrastructure.repository.jpa.JpaBaseRepository;
 import com.github.trks1970.common.infrastructure.repository.jpa.NamedEntityRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
@@ -28,17 +26,11 @@ public class DefaultPropertyValueRepositoryImpl
         DefaultPropertyValueEntity> {
 
   private final JpaDefaultPropertyValueEntityRepository jpaDefaultPropertyValueEntityRepository;
-  private final JpaDefaultExtensibleEntityRepository jpaDefaultExtensibleEntityRepository;
   private final DefaultPropertyValueEntityMapper defaultPropertyValueEntityMapper;
 
   @Override
   protected NamedEntityRepository<DefaultPropertyValueEntity, Long, Long> repository() {
     return jpaDefaultPropertyValueEntityRepository;
-  }
-
-  @Override
-  protected JpaBaseRepository<DefaultExtensibleEntity, Long, Long> extensibleEntityRepository() {
-    return jpaDefaultExtensibleEntityRepository;
   }
 
   @Override
@@ -49,5 +41,10 @@ public class DefaultPropertyValueRepositoryImpl
   @Override
   protected Specification<DefaultPropertyValueEntity> name(String name) {
     return DefaultPropertyValueEntitySpecification.name(name);
+  }
+
+  @Override
+  protected Specification<DefaultPropertyValueEntity> extensibleId(Long extensibleId) {
+    return DefaultPropertyValueEntitySpecification.extensibleId(extensibleId);
   }
 }
