@@ -1,6 +1,6 @@
 package com.github.trks1970.common.domain.service.impl;
 
-import com.github.trks1970.common.domain.model.TestNamedUuid;
+import com.github.trks1970.common.domain.model.TestINamedUuid;
 import com.github.trks1970.common.domain.repository.NamedTypeRepository;
 import com.github.trks1970.common.domain.repository.TestNamedUuidRepository;
 import com.github.trks1970.common.domain.service.NamedUuidService;
@@ -19,11 +19,11 @@ public class NamedUuidServiceImpl implements NamedUuidService {
   private final TestNamedUuidRepository repository;
 
   @Override
-  public NamedTypeRepository<UUID, TestNamedUuid> repository() {
+  public NamedTypeRepository<UUID, TestINamedUuid> repository() {
     return repository;
   }
 
-  public Optional<TestNamedUuid> findByUniqueName(@NonNull String name) {
+  public Optional<TestINamedUuid> findByUniqueName(@NonNull String name) {
     return repository.findByName(name).stream().findFirst();
   }
 }

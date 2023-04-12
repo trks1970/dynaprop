@@ -1,15 +1,15 @@
 package com.github.trks1970.common.extensible.infrastructure.repository;
 
-import com.github.trks1970.common.extensible.domain.model.TestExtensible;
-import com.github.trks1970.common.extensible.domain.model.propertyvalue.TestPropertyValue;
+import com.github.trks1970.common.extensible.domain.model.DefaultExtensible;
+import com.github.trks1970.common.extensible.domain.model.propertyvalue.IPropertyValue;
 import com.github.trks1970.common.extensible.domain.repository.TestExtensibleRepository;
-import com.github.trks1970.common.extensible.infrastructure.entity.TestExtensibleEntity;
-import com.github.trks1970.common.extensible.infrastructure.entity.TestExtensibleTypeEntity;
-import com.github.trks1970.common.extensible.infrastructure.entity.propertytype.TestPropertyTypeEntity;
-import com.github.trks1970.common.extensible.infrastructure.entity.propertyvalue.TestPropertyValueEntity;
-import com.github.trks1970.common.extensible.infrastructure.mapper.TestExtensibleEntityMapper;
-import com.github.trks1970.common.extensible.infrastructure.repository.jpa.JpaTestExtensibleEntityRepository;
-import com.github.trks1970.common.extensible.infrastructure.repository.propertyvalue.jpa.JpaTestPropertyValueEntityRepository;
+import com.github.trks1970.common.extensible.infrastructure.entity.DefaultExtensibleEntity;
+import com.github.trks1970.common.extensible.infrastructure.entity.DefaultExtensibleTypeEntity;
+import com.github.trks1970.common.extensible.infrastructure.entity.propertytype.DefaultPropertyTypeEntity;
+import com.github.trks1970.common.extensible.infrastructure.entity.propertyvalue.DefaultPropertyValueEntity;
+import com.github.trks1970.common.extensible.infrastructure.mapper.DefaultExtensibleEntityMapper;
+import com.github.trks1970.common.extensible.infrastructure.repository.jpa.JpaDefaultExtensibleEntityRepository;
+import com.github.trks1970.common.extensible.infrastructure.repository.propertyvalue.jpa.JpaDefaultPropertyValueEntityRepository;
 import com.github.trks1970.common.infrastructure.mapper.EntityMapper;
 import com.github.trks1970.common.infrastructure.repository.jpa.JpaBaseRepository;
 import java.util.Collection;
@@ -22,40 +22,41 @@ import org.springframework.stereotype.Component;
 public class TestExtensibleRepositoryImpl
     extends ExtensibleRepositoryBase<
         Long,
-        TestPropertyValue,
-        TestExtensible,
-        TestExtensibleTypeEntity,
-        TestPropertyTypeEntity,
-        TestExtensibleEntity,
-        TestPropertyValueEntity>
+        IPropertyValue<Long>,
+        DefaultExtensible,
+        DefaultExtensibleTypeEntity,
+        DefaultPropertyTypeEntity,
+        DefaultExtensibleEntity,
+        DefaultPropertyValueEntity>
     implements TestExtensibleRepository {
 
-  private final JpaTestExtensibleEntityRepository jpaTestExtensibleEntityRepository;
-  private final JpaTestPropertyValueEntityRepository jpaTestPropertyValueEntityRepository;
-  private final TestExtensibleEntityMapper testExtensibleEntityMapper;
+  private final JpaDefaultExtensibleEntityRepository jpaDefaultExtensibleEntityRepository;
+  private final JpaDefaultPropertyValueEntityRepository jpaDefaultPropertyValueEntityRepository;
+  private final DefaultExtensibleEntityMapper defaultExtensibleEntityMapper;
 
   @Override
-  protected JpaBaseRepository<TestExtensibleEntity, Long, Long> repository() {
-    return jpaTestExtensibleEntityRepository;
+  protected JpaBaseRepository<DefaultExtensibleEntity, Long, Long> repository() {
+    return jpaDefaultExtensibleEntityRepository;
   }
 
   @Override
-  protected EntityMapper<Long, TestExtensible, TestExtensibleEntity> mapper() {
-    return testExtensibleEntityMapper;
+  protected EntityMapper<Long, DefaultExtensible, DefaultExtensibleEntity> mapper() {
+    return defaultExtensibleEntityMapper;
   }
 
   @Override
-  protected JpaBaseRepository<TestPropertyValueEntity, Long, Long> propertyValueEntityRepository() {
-    return jpaTestPropertyValueEntityRepository;
+  protected JpaBaseRepository<DefaultPropertyValueEntity, Long, Long>
+      propertyValueEntityRepository() {
+    return jpaDefaultPropertyValueEntityRepository;
   }
 
   @Override
-  protected Specification<TestPropertyValueEntity> forExtensibleId(Long extensibleId) {
+  protected Specification<DefaultPropertyValueEntity> forExtensibleId(Long extensibleId) {
     return null;
   }
 
   @Override
-  protected EntityMapper<Long, TestPropertyValue, TestPropertyValueEntity>
+  protected EntityMapper<Long, IPropertyValue<Long>, DefaultPropertyValueEntity>
       propertyValueEntityMapper() {
     return null;
   }

@@ -1,9 +1,9 @@
 package com.github.trks1970.common.extensible.infrastructure.repository.propertytype;
 
-import com.github.trks1970.common.extensible.domain.model.propertytype.PropertyType;
+import com.github.trks1970.common.extensible.domain.model.propertytype.IPropertyType;
 import com.github.trks1970.common.extensible.domain.repository.propertytype.PropertyTypeRepository;
-import com.github.trks1970.common.extensible.infrastructure.entity.ExtensibleTypeEntity;
-import com.github.trks1970.common.extensible.infrastructure.entity.propertytype.PropertyTypeEntity;
+import com.github.trks1970.common.extensible.infrastructure.entity.IExtensibleTypeEntity;
+import com.github.trks1970.common.extensible.infrastructure.entity.propertytype.IPropertyTypeEntity;
 import com.github.trks1970.common.infrastructure.repository.NamedEntityRepositoryBase;
 import java.io.Serializable;
 import java.util.Set;
@@ -12,9 +12,9 @@ import org.springframework.data.jpa.domain.Specification;
 
 public abstract class PropertyTypeRepositoryBase<
         ID extends Serializable,
-        PT extends PropertyType<ID>,
-        ETE extends ExtensibleTypeEntity<ID>,
-        PTE extends PropertyTypeEntity<ID, ETE>>
+        PT extends IPropertyType<ID>,
+        ETE extends IExtensibleTypeEntity<ID>,
+        PTE extends IPropertyTypeEntity<ID, ETE>>
     extends NamedEntityRepositoryBase<ID, PT, PTE> implements PropertyTypeRepository<ID, PT> {
 
   protected abstract Specification<PTE> extensibleType(ID extensibleTypeId);

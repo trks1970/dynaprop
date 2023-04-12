@@ -1,6 +1,6 @@
 package com.github.trks1970.common.domain.service;
 
-import com.github.trks1970.common.domain.model.Persistent;
+import com.github.trks1970.common.domain.model.IPersistent;
 import com.github.trks1970.common.domain.repository.PersistentTypeRepository;
 import jakarta.validation.Valid;
 import java.io.Serializable;
@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Set;
 import org.springframework.transaction.annotation.Transactional;
 
-public interface PersistentTypeService<ID extends Serializable, T extends Persistent<ID>> {
+public interface PersistentTypeService<ID extends Serializable, T extends IPersistent<ID>> {
   PersistentTypeRepository<ID, T> repository();
 
   @Transactional

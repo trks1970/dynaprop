@@ -1,7 +1,6 @@
 package com.github.trks1970.common.extensible.domain.service;
 
-import com.github.trks1970.common.extensible.domain.model.TestExtensibleType;
-import com.github.trks1970.common.extensible.domain.model.propertytype.TestPropertyType;
+import com.github.trks1970.common.extensible.domain.model.DefaultExtensibleType;
 
 public interface TestExtensibleTypeService
-    extends ExtensibleTypeService<Long, TestPropertyType, TestExtensibleType> {}
+    extends ExtensibleTypeService<Long, TestIPropertyType, DefaultExtensibleType> {}

@@ -1,9 +1,9 @@
 package com.github.trks1970.common.infrastructure.repository;
 
 import com.github.trks1970.common.domain.exception.NotFoundException;
-import com.github.trks1970.common.domain.model.Persistent;
+import com.github.trks1970.common.domain.model.IPersistent;
 import com.github.trks1970.common.domain.repository.PersistentTypeRepository;
-import com.github.trks1970.common.infrastructure.entity.PersistentEntity;
+import com.github.trks1970.common.infrastructure.entity.IPersistentEntity;
 import com.github.trks1970.common.infrastructure.mapper.EntityMapper;
 import com.github.trks1970.common.infrastructure.repository.jpa.JpaBaseRepository;
 import java.io.Serializable;
@@ -15,7 +15,7 @@ import org.springframework.lang.Nullable;
 
 @Slf4j
 public abstract class PersistentEntityRepositoryBase<
-        ID extends Serializable, T extends Persistent<ID>, E extends PersistentEntity<ID>>
+        ID extends Serializable, T extends IPersistent<ID>, E extends IPersistentEntity<ID>>
     implements PersistentTypeRepository<ID, T> {
 
   protected abstract JpaBaseRepository<E, ID, Long> repository();
@@ -65,7 +65,7 @@ public abstract class PersistentEntityRepositoryBase<
 
   @SuppressWarnings("unused")
   protected NotFoundException notFoundException(
-      @Nullable ID id, @Nullable Persistent<ID> type, @Nullable PersistentEntity<ID> entity) {
-    return new NotFoundException(Persistent.class, "id " + id);
+      @Nullable ID id, @Nullable IPersistent<ID> type, @Nullable IPersistentEntity<ID> entity) {
+    return new NotFoundException(IPersistent.class, "id " + id);
   }
 }

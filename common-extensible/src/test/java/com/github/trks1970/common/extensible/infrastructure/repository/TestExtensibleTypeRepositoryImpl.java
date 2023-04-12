@@ -1,16 +1,16 @@
 package com.github.trks1970.common.extensible.infrastructure.repository;
 
-import com.github.trks1970.common.extensible.domain.model.TestExtensibleType;
+import com.github.trks1970.common.extensible.domain.model.DefaultExtensibleType;
 import com.github.trks1970.common.extensible.domain.repository.TestExtensibleTypeRepository;
-import com.github.trks1970.common.extensible.infrastructure.entity.TestExtensibleTypeEntity;
-import com.github.trks1970.common.extensible.infrastructure.mapper.TestExtensibleTypeEntityMapper;
-import com.github.trks1970.common.extensible.infrastructure.repository.jpa.JpaTestExtensibleTypeEntityRepository;
-import com.github.trks1970.common.extensible.infrastructure.repository.jpa.specification.TestExtensibleTypeSpecification;
-import com.github.trks1970.common.extensible.infrastructure.repository.propertytype.jpa.JpaTestPropertyTypeEntityRepository;
-import com.github.trks1970.common.extensible.infrastructure.repository.propertytype.jpa.specification.TestPropertyTypeSpecification;
+import com.github.trks1970.common.extensible.infrastructure.entity.DefaultExtensibleTypeEntity;
+import com.github.trks1970.common.extensible.infrastructure.entity.IdProjection;
+import com.github.trks1970.common.extensible.infrastructure.entity.propertytype.DefaultPropertyTypeEntity;
+import com.github.trks1970.common.extensible.infrastructure.mapper.DefaultExtensibleTypeEntityMapper;
+import com.github.trks1970.common.extensible.infrastructure.repository.jpa.JpaDefaultExtensibleTypeEntityRepository;
+import com.github.trks1970.common.extensible.infrastructure.repository.jpa.specification.DefaultExtensibleTypeSpecification;
+import com.github.trks1970.common.extensible.infrastructure.repository.propertytype.jpa.JpaDefaultPropertyTypeEntityRepository;
 import com.github.trks1970.common.infrastructure.mapper.EntityMapper;
 import com.github.trks1970.common.infrastructure.repository.jpa.JpaBaseRepository;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -22,38 +22,42 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 @Slf4j
 public class TestExtensibleTypeRepositoryImpl
-    extends ExtensibleTypeRepositoryBase<Long, TestExtensibleType, TestExtensibleTypeEntity>
+    extends ExtensibleTypeRepositoryBase<
+        Long, DefaultExtensibleType, DefaultExtensibleTypeEntity, DefaultPropertyTypeEntity>
     implements TestExtensibleTypeRepository {
 
-  private final JpaTestExtensibleTypeEntityRepository jpaTestExtensibleTypeEntityRepository;
-  private final JpaTestPropertyTypeEntityRepository jpaTestPropertyTypeEntityRepository;
-  private final TestExtensibleTypeEntityMapper testExtensibleTypeEntityMapper;
+  private final JpaDefaultExtensibleTypeEntityRepository jpaDefaultExtensibleTypeEntityRepository;
+  private final JpaDefaultPropertyTypeEntityRepository jpaDefaultPropertyTypeEntityRepository;
+  private final DefaultExtensibleTypeEntityMapper defaultExtensibleTypeEntityMapper;
 
-  @Override
   public void deleteById(Long extensibleTypeId) {
-    Set<IdProjection> propertyTypeIds =
-        new HashSet<>(
-            jpaTestPropertyTypeEntityRepository.findBy(
-                TestPropertyTypeSpecification.extensibleTypeId(extensibleTypeId),
-                fetchableFluentQuery ->
-                    fetchableFluentQuery.as(IdProjection.class).project("id").all()));
-    jpaTestPropertyTypeEntityRepository.deleteAllById(
+    log.trace("propertyTypeIds");
+    Set<IdProjection<Long>> propertyTypeIds =
+        jpaDefaultPropertyTypeEntityRepository.findIdByExtensibleTypeId(extensibleTypeId);
+    log.trace("delete propertyTypes");
+    jpaDefaultPropertyTypeEntityRepository.deleteAllById(
         propertyTypeIds.stream().map(IdProjection::getId).collect(Collectors.toSet()));
+    log.trace("delete extensibleType");
     repository().deleteById(extensibleTypeId);
   }
 
   @Override
-  protected JpaBaseRepository<TestExtensibleTypeEntity, Long, Long> repository() {
-    return jpaTestExtensibleTypeEntityRepository;
+  protected JpaBaseRepository<DefaultExtensibleTypeEntity, Long, Long> repository() {
+    return jpaDefaultExtensibleTypeEntityRepository;
   }
 
   @Override
-  protected EntityMapper<Long, TestExtensibleType, TestExtensibleTypeEntity> mapper() {
-    return testExtensibleTypeEntityMapper;
+  protected EntityMapper<Long, DefaultExtensibleType, DefaultExtensibleTypeEntity> mapper() {
+    return defaultExtensibleTypeEntityMapper;
   }
 
   @Override
-  protected Specification<TestExtensibleTypeEntity> name(String name) {
-    return TestExtensibleTypeSpecification.name(name);
+  protected Specification<DefaultExtensibleTypeEntity> name(String name) {
+    return DefaultExtensibleTypeSpecification.name(name);
+  }
+
+  @Override
+  protected JpaDefaultPropertyTypeEntityRepository propertyTypeRepository() {
+    return jpaDefaultPropertyTypeEntityRepository;
   }
 }

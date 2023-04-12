@@ -1,6 +1,6 @@
 package com.github.trks1970.common.domain.service.impl;
 
-import com.github.trks1970.common.domain.model.TestPersistentLong;
+import com.github.trks1970.common.domain.model.TestIPersistentLong;
 import com.github.trks1970.common.domain.repository.PersistentTypeRepository;
 import com.github.trks1970.common.domain.repository.TestPersistentLongRepository;
 import com.github.trks1970.common.domain.service.PersistentLongService;
@@ -15,7 +15,7 @@ public class PersistentLongServiceImpl implements PersistentLongService {
   private final TestPersistentLongRepository repository;
 
   @Override
-  public PersistentTypeRepository<Long, TestPersistentLong> repository() {
+  public PersistentTypeRepository<Long, TestIPersistentLong> repository() {
     return repository;
   }
 }

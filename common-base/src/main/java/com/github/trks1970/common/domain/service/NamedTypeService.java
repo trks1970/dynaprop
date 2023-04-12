@@ -1,13 +1,13 @@
 package com.github.trks1970.common.domain.service;
 
-import com.github.trks1970.common.domain.model.Named;
+import com.github.trks1970.common.domain.model.INamed;
 import com.github.trks1970.common.domain.repository.NamedTypeRepository;
 import jakarta.validation.Valid;
 import java.io.Serializable;
 import java.util.Set;
 import org.springframework.transaction.annotation.Transactional;
 
-public interface NamedTypeService<ID extends Serializable, T extends Named<ID>>
+public interface NamedTypeService<ID extends Serializable, T extends INamed<ID>>
     extends PersistentTypeService<ID, T> {
   NamedTypeRepository<ID, T> repository();
 

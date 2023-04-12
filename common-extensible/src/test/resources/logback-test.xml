@@ -13,8 +13,9 @@
   </root>
 
   <logger name="com.github.trks1970.common" level="TRACE"/>
-  <!--
+
     <logger name="org.hibernate.SQL" level="DEBUG"/>
-    <logger name="org.hibernate.orm.jdbc.bind" level="TRACE"/>
-  -->
+  <!--
+      <logger name="org.hibernate.orm.jdbc.bind" level="TRACE"/>
+    -->
 </configuration>

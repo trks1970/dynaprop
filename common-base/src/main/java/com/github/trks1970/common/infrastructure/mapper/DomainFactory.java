@@ -1,7 +1,7 @@
 package com.github.trks1970.common.infrastructure.mapper;
 
-import com.github.trks1970.common.domain.model.Persistent;
-import com.github.trks1970.common.infrastructure.entity.PersistentEntity;
+import com.github.trks1970.common.domain.model.IPersistent;
+import com.github.trks1970.common.infrastructure.entity.IPersistentEntity;
 import java.io.Serializable;
 import java.util.Map;
 import java.util.function.BiFunction;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Slf4j
 public abstract class DomainFactory<
-    ID extends Serializable, E extends PersistentEntity<ID>, D extends Persistent<ID>> {
+    ID extends Serializable, E extends IPersistentEntity<ID>, D extends IPersistent<ID>> {
 
   protected abstract Map<Class<D>, BiFunction<Class<D>, E, D>> getFactories();
 

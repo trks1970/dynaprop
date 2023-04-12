@@ -1,11 +1,11 @@
 package com.github.trks1970.common.infrastructure.repository;
 
 import com.github.trks1970.common.domain.exception.NotFoundException;
-import com.github.trks1970.common.domain.model.Persistent;
-import com.github.trks1970.common.domain.model.TestNamedUuid;
+import com.github.trks1970.common.domain.model.IPersistent;
+import com.github.trks1970.common.domain.model.TestINamedUuid;
 import com.github.trks1970.common.domain.repository.TestNamedUuidRepository;
-import com.github.trks1970.common.infrastructure.entity.PersistentEntity;
-import com.github.trks1970.common.infrastructure.entity.TestNamedUuidEntity;
+import com.github.trks1970.common.infrastructure.entity.IPersistentEntity;
+import com.github.trks1970.common.infrastructure.entity.TestNamedEntity;
 import com.github.trks1970.common.infrastructure.mapper.EntityMapper;
 import com.github.trks1970.common.infrastructure.mapper.TestNamedUuidEntityMapper;
 import com.github.trks1970.common.infrastructure.repository.jpa.JpaBaseRepository;
@@ -20,31 +20,33 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class TestNamedUuidEntityRepositoryImpl
-    extends NamedEntityRepositoryBase<UUID, TestNamedUuid, TestNamedUuidEntity>
+    extends NamedEntityRepositoryBase<UUID, TestINamedUuid, TestNamedEntity>
     implements TestNamedUuidRepository {
 
   private final JpaTestNamedUuidEntityRepository jpaTestPersistentLongEntityRepository;
   private final TestNamedUuidEntityMapper testNamedUuidEntityMapper;
 
   @Override
-  protected JpaBaseRepository<TestNamedUuidEntity, UUID, Long> repository() {
+  protected JpaBaseRepository<TestNamedEntity, UUID, Long> repository() {
     return jpaTestPersistentLongEntityRepository;
   }
 
   @Override
-  protected EntityMapper<UUID, TestNamedUuid, TestNamedUuidEntity> mapper() {
+  protected EntityMapper<UUID, TestINamedUuid, TestNamedEntity> mapper() {
     return testNamedUuidEntityMapper;
   }
 
   @Override
   @SuppressWarnings("unused")
   protected NotFoundException notFoundException(
-      @Nullable UUID id, @Nullable Persistent<UUID> type, @Nullable PersistentEntity<UUID> entity) {
-    return new NotFoundException(TestNamedUuid.class, "id " + id);
+      @Nullable UUID id,
+      @Nullable IPersistent<UUID> type,
+      @Nullable IPersistentEntity<UUID> entity) {
+    return new NotFoundException(TestINamedUuid.class, "id " + id);
   }
 
   @Override
-  protected Specification<TestNamedUuidEntity> name(String name) {
+  protected Specification<TestNamedEntity> name(String name) {
     return TestNamedUuidEntitySpecification.name(name);
   }
 }
