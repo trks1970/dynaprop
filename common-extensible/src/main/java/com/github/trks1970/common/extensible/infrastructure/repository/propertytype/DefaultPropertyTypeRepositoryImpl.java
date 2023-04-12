@@ -7,7 +7,7 @@ import com.github.trks1970.common.extensible.infrastructure.mapper.propertytype.
 import com.github.trks1970.common.extensible.infrastructure.repository.propertytype.jpa.JpaDefaultPropertyTypeEntityRepository;
 import com.github.trks1970.common.extensible.infrastructure.repository.propertytype.jpa.specification.DefaultPropertyTypeEntitySpecification;
 import com.github.trks1970.common.infrastructure.mapper.EntityMapper;
-import com.github.trks1970.common.infrastructure.repository.jpa.JpaBaseRepository;
+import com.github.trks1970.common.infrastructure.repository.jpa.NamedEntityRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
@@ -22,11 +22,6 @@ public class DefaultPropertyTypeRepositoryImpl
   private final DefaultPropertyTypeEntityMapper defaultPropertyTypeEntityMapper;
 
   @Override
-  protected JpaBaseRepository<DefaultPropertyTypeEntity, Long, Long> repository() {
-    return jpaDefaultPropertyTypeEntityRepository;
-  }
-
-  @Override
   protected EntityMapper<Long, IPropertyType<Long>, DefaultPropertyTypeEntity> mapper() {
     return defaultPropertyTypeEntityMapper;
   }
@@ -34,6 +29,11 @@ public class DefaultPropertyTypeRepositoryImpl
   @Override
   protected Specification<DefaultPropertyTypeEntity> name(String name) {
     return DefaultPropertyTypeEntitySpecification.name(name);
+  }
+
+  @Override
+  protected NamedEntityRepository<DefaultPropertyTypeEntity, Long, Long> repository() {
+    return jpaDefaultPropertyTypeEntityRepository;
   }
 
   @Override

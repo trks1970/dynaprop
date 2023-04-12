@@ -1,4 +1,4 @@
-package com.github.trks1970.common.extensible.infrastructure.entity;
+package com.github.trks1970.common.infrastructure.entity;
 
 import java.io.Serializable;
 

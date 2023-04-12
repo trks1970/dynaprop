@@ -11,6 +11,7 @@ import com.github.trks1970.common.extensible.infrastructure.repository.propertyv
 import com.github.trks1970.common.extensible.infrastructure.repository.propertyvalue.jpa.specification.DefaultPropertyValueEntitySpecification;
 import com.github.trks1970.common.infrastructure.mapper.EntityMapper;
 import com.github.trks1970.common.infrastructure.repository.jpa.JpaBaseRepository;
+import com.github.trks1970.common.infrastructure.repository.jpa.NamedEntityRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
@@ -31,7 +32,7 @@ public class DefaultPropertyValueRepositoryImpl
   private final DefaultPropertyValueEntityMapper defaultPropertyValueEntityMapper;
 
   @Override
-  protected JpaBaseRepository<DefaultPropertyValueEntity, Long, Long> repository() {
+  protected NamedEntityRepository<DefaultPropertyValueEntity, Long, Long> repository() {
     return jpaDefaultPropertyValueEntityRepository;
   }
 

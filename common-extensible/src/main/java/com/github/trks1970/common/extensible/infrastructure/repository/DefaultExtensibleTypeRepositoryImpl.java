@@ -1,16 +1,15 @@
 package com.github.trks1970.common.extensible.infrastructure.repository;
 
 import com.github.trks1970.common.extensible.domain.model.DefaultExtensibleType;
-import com.github.trks1970.common.extensible.domain.repository.TestExtensibleTypeRepository;
 import com.github.trks1970.common.extensible.infrastructure.entity.DefaultExtensibleTypeEntity;
-import com.github.trks1970.common.extensible.infrastructure.entity.IdProjection;
 import com.github.trks1970.common.extensible.infrastructure.entity.propertytype.DefaultPropertyTypeEntity;
 import com.github.trks1970.common.extensible.infrastructure.mapper.DefaultExtensibleTypeEntityMapper;
 import com.github.trks1970.common.extensible.infrastructure.repository.jpa.JpaDefaultExtensibleTypeEntityRepository;
 import com.github.trks1970.common.extensible.infrastructure.repository.jpa.specification.DefaultExtensibleTypeSpecification;
 import com.github.trks1970.common.extensible.infrastructure.repository.propertytype.jpa.JpaDefaultPropertyTypeEntityRepository;
+import com.github.trks1970.common.infrastructure.entity.IdProjection;
 import com.github.trks1970.common.infrastructure.mapper.EntityMapper;
-import com.github.trks1970.common.infrastructure.repository.jpa.JpaBaseRepository;
+import com.github.trks1970.common.infrastructure.repository.jpa.NamedEntityRepository;
 import java.util.Set;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -21,10 +20,9 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class TestExtensibleTypeRepositoryImpl
+public class DefaultExtensibleTypeRepositoryImpl
     extends ExtensibleTypeRepositoryBase<
-        Long, DefaultExtensibleType, DefaultExtensibleTypeEntity, DefaultPropertyTypeEntity>
-    implements TestExtensibleTypeRepository {
+        Long, DefaultExtensibleType, DefaultExtensibleTypeEntity, DefaultPropertyTypeEntity> {
 
   private final JpaDefaultExtensibleTypeEntityRepository jpaDefaultExtensibleTypeEntityRepository;
   private final JpaDefaultPropertyTypeEntityRepository jpaDefaultPropertyTypeEntityRepository;
@@ -42,7 +40,7 @@ public class TestExtensibleTypeRepositoryImpl
   }
 
   @Override
-  protected JpaBaseRepository<DefaultExtensibleTypeEntity, Long, Long> repository() {
+  protected NamedEntityRepository<DefaultExtensibleTypeEntity, Long, Long> repository() {
     return jpaDefaultExtensibleTypeEntityRepository;
   }
 

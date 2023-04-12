@@ -4,4 +4,4 @@ import com.github.trks1970.common.infrastructure.entity.TestNamedEntity;
 import java.util.UUID;
 
 public interface JpaTestNamedUuidEntityRepository
-    extends JpaBaseRepository<TestNamedEntity, UUID, Long> {}
+    extends NamedEntityRepository<TestNamedEntity, UUID, Long> {}

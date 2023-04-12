@@ -11,7 +11,6 @@ import com.github.trks1970.common.infrastructure.mapper.EntityMapper;
 import com.github.trks1970.common.infrastructure.repository.PersistentEntityRepositoryBase;
 import com.github.trks1970.common.infrastructure.repository.jpa.JpaBaseRepository;
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.data.jpa.domain.Specification;
@@ -28,21 +27,14 @@ public abstract class ExtensibleRepositoryBase<
 
   @Override
   public Set<PV> getPropertyValues(ID extensibleId) {
-    return propertyValueEntityRepository()
-        .findBy(
-            forExtensibleId(extensibleId),
-            fetchableFluentQuery -> fetchableFluentQuery.project(getQueryAttributes()))
-        .all()
-        .stream()
+    return propertyValueEntityRepository().findAll(extensibleId(extensibleId)).stream()
         .map(pve -> propertyValueEntityMapper().toDomain(pve))
         .collect(Collectors.toSet());
   }
 
   protected abstract JpaBaseRepository<PVE, ID, Long> propertyValueEntityRepository();
 
-  protected abstract Specification<PVE> forExtensibleId(ID extensibleId);
+  protected abstract Specification<PVE> extensibleId(ID extensibleId);
 
   protected abstract EntityMapper<ID, PV, PVE> propertyValueEntityMapper();
-
-  protected abstract Collection<String> getQueryAttributes();
 }

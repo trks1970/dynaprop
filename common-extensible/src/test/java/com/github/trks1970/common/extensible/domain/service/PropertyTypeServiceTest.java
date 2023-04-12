@@ -3,7 +3,9 @@ package com.github.trks1970.common.extensible.domain.service;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.github.trks1970.common.extensible.domain.model.propertytype.DefaultStringPropertyType;
-import com.github.trks1970.common.extensible.domain.repository.propertytype.TestPropertyTypeRepository;
+import com.github.trks1970.common.extensible.domain.model.propertytype.IPropertyType;
+import com.github.trks1970.common.extensible.domain.repository.propertytype.PropertyTypeRepository;
+import com.github.trks1970.common.extensible.domain.service.propertytype.PropertyTypeService;
 import com.github.trks1970.common.extensible.infrastructure.entity.DefaultExtensibleTypeEntity;
 import com.github.trks1970.common.extensible.infrastructure.repository.jpa.JpaDefaultExtensibleTypeEntityRepository;
 import com.github.trks1970.common.extensible.infrastructure.repository.propertytype.jpa.JpaDefaultPropertyTypeEntityRepository;
@@ -16,10 +18,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.lang.Nullable;
 
 @SpringBootTest
-public class IPropertyTypeServiceTest {
+class PropertyTypeServiceTest {
 
-  @Autowired TestPropertyTypeService service;
-  @Autowired TestPropertyTypeRepository propertyTypeRepository;
+  @Autowired PropertyTypeService<Long, IPropertyType<Long>> service;
+  @Autowired PropertyTypeRepository<Long, IPropertyType<Long>> propertyTypeRepository;
   @Autowired JpaDefaultPropertyTypeEntityRepository jpaPropertyTypeEntityRepository;
 
   @Autowired JpaDefaultExtensibleTypeEntityRepository jpaExtensibleTypeRepository;
@@ -40,7 +42,7 @@ public class IPropertyTypeServiceTest {
 
   @Test
   void testCreate() {
-    TestIPropertyType type = getPropertyType();
+    IPropertyType<Long> type = getPropertyType();
     assertThat(type.getId()).isNull();
     type = service.save(type);
 
@@ -49,19 +51,19 @@ public class IPropertyTypeServiceTest {
 
   @Test
   void testUpdate() {
-    TestIPropertyType type = getPropertyType();
+    IPropertyType<Long> type = getPropertyType();
     type = service.save(type);
 
     type = ((DefaultStringPropertyType) type).toBuilder().name("newName").build();
     service.save(type);
 
-    TestIPropertyType found = service.findById(type.getId());
+    IPropertyType<Long> found = service.findById(type.getId());
 
     assertThat(type.getId()).isEqualTo(found.getId());
     assertThat(found.getName()).isEqualTo(type.getName());
   }
 
-  private TestIPropertyType getPropertyType() {
+  private IPropertyType<Long> getPropertyType() {
     assert Objects.requireNonNull(extensibleType).getId() != null;
     return DefaultStringPropertyType.builder()
         .name("propertyType")

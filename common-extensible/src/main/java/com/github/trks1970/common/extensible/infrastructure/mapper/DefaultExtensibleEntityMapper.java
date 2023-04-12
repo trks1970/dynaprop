@@ -4,12 +4,16 @@ import com.github.trks1970.common.extensible.domain.model.DefaultExtensible;
 import com.github.trks1970.common.extensible.infrastructure.entity.DefaultExtensibleEntity;
 import com.github.trks1970.common.extensible.infrastructure.entity.DefaultExtensibleTypeEntity;
 import com.github.trks1970.common.infrastructure.mapper.EntityMapper;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Mapper
+@SuppressFBWarnings(
+    value = "NP_NONNULL_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR",
+    justification = "@Autowired")
 public abstract class DefaultExtensibleEntityMapper
     implements EntityMapper<Long, DefaultExtensible, DefaultExtensibleEntity> {
 

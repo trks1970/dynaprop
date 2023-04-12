@@ -8,8 +8,8 @@ import com.github.trks1970.common.infrastructure.entity.IPersistentEntity;
 import com.github.trks1970.common.infrastructure.entity.TestNamedEntity;
 import com.github.trks1970.common.infrastructure.mapper.EntityMapper;
 import com.github.trks1970.common.infrastructure.mapper.TestNamedUuidEntityMapper;
-import com.github.trks1970.common.infrastructure.repository.jpa.JpaBaseRepository;
 import com.github.trks1970.common.infrastructure.repository.jpa.JpaTestNamedUuidEntityRepository;
+import com.github.trks1970.common.infrastructure.repository.jpa.NamedEntityRepository;
 import com.github.trks1970.common.infrastructure.repository.jpa.specification.TestNamedUuidEntitySpecification;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -25,11 +25,6 @@ public class TestNamedUuidEntityRepositoryImpl
 
   private final JpaTestNamedUuidEntityRepository jpaTestPersistentLongEntityRepository;
   private final TestNamedUuidEntityMapper testNamedUuidEntityMapper;
-
-  @Override
-  protected JpaBaseRepository<TestNamedEntity, UUID, Long> repository() {
-    return jpaTestPersistentLongEntityRepository;
-  }
 
   @Override
   protected EntityMapper<UUID, TestINamedUuid, TestNamedEntity> mapper() {
@@ -48,5 +43,10 @@ public class TestNamedUuidEntityRepositoryImpl
   @Override
   protected Specification<TestNamedEntity> name(String name) {
     return TestNamedUuidEntitySpecification.name(name);
+  }
+
+  @Override
+  protected NamedEntityRepository<TestNamedEntity, UUID, Long> repository() {
+    return jpaTestPersistentLongEntityRepository;
   }
 }

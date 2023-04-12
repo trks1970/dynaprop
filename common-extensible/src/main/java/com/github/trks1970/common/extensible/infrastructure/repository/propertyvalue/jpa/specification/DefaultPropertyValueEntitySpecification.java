@@ -15,6 +15,11 @@ public class DefaultPropertyValueEntitySpecification {
         criteriaBuilder.equal(root.get(DefaultPropertyValueEntity_.NAME), name);
   }
 
+  public static Specification<DefaultPropertyValueEntity> extensibleId(Long extensibleId) {
+    return (root, query, criteriaBuilder) ->
+        criteriaBuilder.equal(root.get(DefaultPropertyValueEntity_.EXTENSIBLE), extensibleId);
+  }
+
   public static Specification<DefaultPropertyValueEntity> propertyType(Long propertyTypeId) {
     return (root, query, criteriaBuilder) ->
         criteriaBuilder.equal(root.get(DefaultPropertyValueEntity_.PROPERTY_TYPE), propertyTypeId);

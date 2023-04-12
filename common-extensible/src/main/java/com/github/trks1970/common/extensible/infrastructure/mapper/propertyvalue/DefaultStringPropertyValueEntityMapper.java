@@ -7,13 +7,17 @@ import com.github.trks1970.common.extensible.infrastructure.entity.propertyvalue
 import com.github.trks1970.common.extensible.infrastructure.mapper.DefaultExtensibleReferenceMapper;
 import com.github.trks1970.common.extensible.infrastructure.mapper.propertytype.DefaultPropertyTypeReferenceMapper;
 import com.github.trks1970.common.infrastructure.mapper.EntityMapper;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Mapper
-public abstract class TestStringPropertyValueEntityMapper
+@SuppressFBWarnings(
+    value = "NP_NONNULL_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR",
+    justification = "@Autowired")
+public abstract class DefaultStringPropertyValueEntityMapper
     implements EntityMapper<Long, DefaultStringPropertyValue, DefaultStringPropertyValueEntity> {
 
   @Autowired private DefaultPropertyTypeReferenceMapper defaultPropertyTypeReferenceMapper;

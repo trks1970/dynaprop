@@ -3,10 +3,11 @@ package com.github.trks1970.common.extensible.domain.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import com.github.trks1970.common.extensible.domain.exception.IntegrityViolationException;
+import com.github.trks1970.common.domain.exception.IntegrityViolationException;
 import com.github.trks1970.common.extensible.domain.model.DefaultExtensibleType;
 import com.github.trks1970.common.extensible.domain.model.propertytype.DefaultStringPropertyType;
-import com.github.trks1970.common.extensible.domain.repository.TestExtensibleTypeRepository;
+import com.github.trks1970.common.extensible.domain.model.propertytype.IPropertyType;
+import com.github.trks1970.common.extensible.domain.repository.ExtensibleTypeRepository;
 import com.github.trks1970.common.extensible.infrastructure.entity.DefaultExtensibleTypeEntity;
 import com.github.trks1970.common.extensible.infrastructure.repository.jpa.JpaDefaultExtensibleTypeEntityRepository;
 import com.github.trks1970.common.extensible.infrastructure.repository.propertytype.jpa.JpaDefaultPropertyTypeEntityRepository;
@@ -18,10 +19,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-public class IIExtensibleTypeServiceTest {
+class ExtensibleTypeServiceTest {
 
-  @Autowired TestExtensibleTypeService service;
-  @Autowired TestExtensibleTypeRepository extensibleTypeRepository;
+  @Autowired ExtensibleTypeService<Long, IPropertyType<Long>, DefaultExtensibleType> service;
+  @Autowired ExtensibleTypeRepository<Long, DefaultExtensibleType> extensibleTypeRepository;
   @Autowired JpaDefaultExtensibleTypeEntityRepository jpaExtensibleTypeRepository;
   @Autowired JpaDefaultPropertyTypeEntityRepository jpaPropertyTypeEntityRepository;
 
@@ -89,14 +90,14 @@ public class IIExtensibleTypeServiceTest {
   void testAddPropertyType() {
     DefaultExtensibleType extensibleType =
         service.save(DefaultExtensibleType.builder().name("extensibleType").build());
-    TestIPropertyType propertyType =
+    IPropertyType<Long> propertyType =
         DefaultStringPropertyType.builder()
             .name("stringProperty")
             .extensibleTypeId(extensibleType.getId())
             .build();
 
     propertyType = service.addPropertyType(propertyType);
-    Set<TestIPropertyType> propertyTypes = service.getPropertyTypes(extensibleType.getId());
+    Set<IPropertyType<Long>> propertyTypes = service.getPropertyTypes(extensibleType.getId());
 
     assertThat(propertyType.getId()).isNotNull();
     assertThat(propertyTypes.size()).isEqualTo(1);
@@ -106,13 +107,13 @@ public class IIExtensibleTypeServiceTest {
   void testRemovePropertyType() {
     DefaultExtensibleType extensibleType =
         service.save(DefaultExtensibleType.builder().name("extensibleType").build());
-    TestIPropertyType propertyType =
+    IPropertyType<Long> propertyType =
         DefaultStringPropertyType.builder()
             .name("stringProperty")
             .extensibleTypeId(extensibleType.getId())
             .build();
     propertyType = service.addPropertyType(propertyType);
-    Set<TestIPropertyType> propertyTypes = service.getPropertyTypes(extensibleType.getId());
+    Set<IPropertyType<Long>> propertyTypes = service.getPropertyTypes(extensibleType.getId());
     assertThat(propertyType.getId()).isNotNull();
     assertThat(propertyTypes.size()).isEqualTo(1);
 
@@ -126,12 +127,12 @@ public class IIExtensibleTypeServiceTest {
     DefaultExtensibleType extensibleType =
         DefaultExtensibleType.builder().name("extensibleType").build();
     extensibleType = service.save(extensibleType);
-    TestIPropertyType propertyType1 =
+    IPropertyType<Long> propertyType1 =
         DefaultStringPropertyType.builder()
             .name("stringProperty")
             .extensibleTypeId(extensibleType.getId())
             .build();
-    TestIPropertyType propertyType2 =
+    IPropertyType<Long> propertyType2 =
         DefaultStringPropertyType.builder()
             .name("stringProperty2")
             .extensibleTypeId(extensibleType.getId())

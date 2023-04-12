@@ -13,12 +13,12 @@ import org.springframework.stereotype.Component;
 public class DefaultPropertyValueEntityMapper
     implements EntityMapper<Long, IPropertyValue<Long>, DefaultPropertyValueEntity> {
 
-  private final TestStringPropertyValueEntityMapper testStringPropertyValueEntityMapper;
+  private final DefaultStringPropertyValueEntityMapper defaultStringPropertyValueEntityMapper;
 
   @Override
   public IPropertyValue<Long> toDomain(DefaultPropertyValueEntity entity) {
     return switch (entity.getType()) {
-      case STRING -> testStringPropertyValueEntityMapper.toDomain(
+      case STRING -> defaultStringPropertyValueEntityMapper.toDomain(
           (DefaultStringPropertyValueEntity) entity);
       case BOOLEAN -> throw new IllegalStateException();
     };
@@ -27,7 +27,7 @@ public class DefaultPropertyValueEntityMapper
   @Override
   public DefaultPropertyValueEntity toEntity(IPropertyValue<Long> type) {
     return switch (type.getType()) {
-      case STRING -> testStringPropertyValueEntityMapper.toEntity(
+      case STRING -> defaultStringPropertyValueEntityMapper.toEntity(
           (DefaultStringPropertyValue) type);
       case BOOLEAN -> throw new IllegalStateException();
     };
@@ -37,7 +37,7 @@ public class DefaultPropertyValueEntityMapper
   public DefaultPropertyValueEntity toEntity(
       IPropertyValue<Long> type, DefaultPropertyValueEntity entity) {
     return switch (type.getType()) {
-      case STRING -> testStringPropertyValueEntityMapper.toEntity(
+      case STRING -> defaultStringPropertyValueEntityMapper.toEntity(
           (DefaultStringPropertyValue) type, (DefaultStringPropertyValueEntity) entity);
       case BOOLEAN -> throw new IllegalStateException();
     };

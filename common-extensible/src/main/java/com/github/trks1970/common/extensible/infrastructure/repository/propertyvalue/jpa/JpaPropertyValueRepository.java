@@ -4,7 +4,7 @@ import com.github.trks1970.common.extensible.infrastructure.entity.IExtensibleEn
 import com.github.trks1970.common.extensible.infrastructure.entity.IExtensibleTypeEntity;
 import com.github.trks1970.common.extensible.infrastructure.entity.propertytype.IPropertyTypeEntity;
 import com.github.trks1970.common.extensible.infrastructure.entity.propertyvalue.IPropertyValueEntity;
-import com.github.trks1970.common.infrastructure.repository.jpa.JpaBaseRepository;
+import com.github.trks1970.common.infrastructure.repository.jpa.NamedEntityRepository;
 import java.io.Serializable;
 import org.springframework.data.repository.NoRepositoryBean;
 
@@ -15,4 +15,4 @@ public interface JpaPropertyValueRepository<
         EE extends IExtensibleEntity<ID, ETE>,
         PTE extends IPropertyTypeEntity<ID, ETE>,
         PVE extends IPropertyValueEntity<ID, ETE, EE, PTE>>
-    extends JpaBaseRepository<PVE, ID, Long> {}
+    extends NamedEntityRepository<PVE, ID, Long> {}
