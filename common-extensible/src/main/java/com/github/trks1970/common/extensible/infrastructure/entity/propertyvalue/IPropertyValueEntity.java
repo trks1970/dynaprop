@@ -9,19 +9,19 @@ import java.io.Serializable;
 
 public interface IPropertyValueEntity<
         ID extends Serializable,
-        ET extends IExtensibleTypeEntity<ID>,
-        E extends IExtensibleEntity<ID, ET>,
-        PT extends IPropertyTypeEntity<ID, ET>>
+        ETE extends IExtensibleTypeEntity<ID>,
+        EE extends IExtensibleEntity<ID, ETE>,
+        PTE extends IPropertyTypeEntity<ID, ETE>>
     extends INamedEntity<ID> {
   Object getValueObject();
 
-  PT getPropertyType();
+  PTE getPropertyType();
 
-  IPropertyValueEntity<ID, ET, E, PT> setPropertyType(PT propertyType);
+  IPropertyValueEntity<ID, ETE, EE, PTE> setPropertyType(PTE propertyType);
 
-  E getExtensible();
+  EE getExtensible();
 
-  IPropertyValueEntity<ID, ET, E, PT> setExtensible(E extensible);
+  IPropertyValueEntity<ID, ETE, EE, PTE> setExtensible(EE extensible);
 
   Types getType();
 }

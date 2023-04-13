@@ -13,5 +13,4 @@ public interface JpaExtensibleEntityRepository<
         ETE extends IExtensibleTypeEntity<ID>,
         EE extends IExtensibleEntity<ID, ETE>>
     extends JpaPersistentEntityRepository<ID, EE, Long> {
-  Set<EE> findByExtensibleTypeId(ID extensibleTypeId);
 }

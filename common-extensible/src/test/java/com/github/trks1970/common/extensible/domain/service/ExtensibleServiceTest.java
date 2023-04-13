@@ -6,9 +6,11 @@ import com.github.trks1970.common.extensible.domain.model.IExtensible;
 import com.github.trks1970.common.extensible.domain.model.IExtensibleType;
 import com.github.trks1970.common.extensible.domain.model.propertytype.DefaultStringPropertyType;
 import com.github.trks1970.common.extensible.domain.model.propertytype.IPropertyType;
+import com.github.trks1970.common.extensible.domain.model.propertyvalue.DefaultStringPropertyValue;
 import com.github.trks1970.common.extensible.domain.model.propertyvalue.IPropertyValue;
 import com.github.trks1970.common.extensible.domain.service.propertytype.PropertyTypeService;
 import com.github.trks1970.common.extensible.domain.service.propertyvalue.PropertyValueService;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -57,8 +59,41 @@ class ExtensibleServiceTest {
   }
 
   @Test
-  void addPropertyValue() {}
+  void addPropertyValue() {
+    assert propertyType != null;
+    assert extensible != null;
+    assert extensibleType != null;
+    extensibleService.addPropertyValue(
+        DefaultStringPropertyValue.builder()
+            .name("valueName")
+            .propertyTypeId(propertyType.getId())
+            .extensibleId(extensible.getId())
+            .build());
+
+    Assertions.assertThat(extensibleService.getPropertyValues(extensibleType.getId())).hasSize(1);
+  }
 
   @Test
-  void removePropertyType() {}
+  void removePropertyType() {
+    assert propertyType != null;
+    assert extensible != null;
+    assert extensibleType != null;
+    extensibleService.addPropertyValue(
+        DefaultStringPropertyValue.builder()
+            .name("valueName")
+            .propertyTypeId(propertyType.getId())
+            .extensibleId(extensible.getId())
+            .build());
+    IPropertyValue<Long> otherValue =
+        DefaultStringPropertyValue.builder()
+            .name("otherValue")
+            .propertyTypeId(propertyType.getId())
+            .extensibleId(extensible.getId())
+            .build();
+    extensibleService.addPropertyValue(otherValue);
+    Assertions.assertThat(extensibleService.getPropertyValues(extensibleType.getId())).hasSize(2);
+
+    extensibleService.removePropertyValue(otherValue);
+    Assertions.assertThat(extensibleService.getPropertyValues(extensibleType.getId())).hasSize(1);
+  }
 }

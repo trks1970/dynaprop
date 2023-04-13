@@ -6,7 +6,7 @@ import com.github.trks1970.common.extensible.infrastructure.entity.DefaultExtens
 import com.github.trks1970.common.extensible.infrastructure.entity.propertytype.DefaultPropertyTypeEntity;
 import com.github.trks1970.common.extensible.infrastructure.entity.propertyvalue.DefaultPropertyValueEntity;
 import com.github.trks1970.common.extensible.infrastructure.mapper.propertyvalue.DefaultPropertyValueEntityMapper;
-import com.github.trks1970.common.extensible.infrastructure.repository.propertyvalue.jpa.JpaDefaultPropertyValueEntityRepositoryJpa;
+import com.github.trks1970.common.extensible.infrastructure.repository.propertyvalue.jpa.JpaDefaultPropertyValueEntityRepository;
 import com.github.trks1970.common.extensible.infrastructure.repository.propertyvalue.jpa.specification.DefaultPropertyValueEntitySpecification;
 import com.github.trks1970.common.infrastructure.mapper.EntityMapper;
 import com.github.trks1970.common.infrastructure.repository.jpa.JpaNamedEntityRepository;
@@ -25,7 +25,7 @@ public class DefaultPropertyValueRepositoryImpl
         DefaultPropertyTypeEntity,
         DefaultPropertyValueEntity> {
 
-  private final JpaDefaultPropertyValueEntityRepositoryJpa jpaDefaultPropertyValueEntityRepository;
+  private final JpaDefaultPropertyValueEntityRepository jpaDefaultPropertyValueEntityRepository;
   private final DefaultPropertyValueEntityMapper defaultPropertyValueEntityMapper;
 
   @Override

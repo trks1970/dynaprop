@@ -18,5 +18,5 @@ public interface ExtensibleService<
   P addPropertyValue(P propertyValue);
 
   @Transactional
-  void removePropertyType(P propertyValue);
+  void removePropertyValue(P propertyValue);
 }

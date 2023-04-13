@@ -9,7 +9,7 @@ import com.github.trks1970.common.extensible.infrastructure.repository.jpa.JpaDe
 import com.github.trks1970.common.extensible.infrastructure.repository.jpa.JpaDefaultExtensibleTypeEntityRepository;
 import com.github.trks1970.common.extensible.infrastructure.repository.jpa.JpaExtensibleEntityRepository;
 import com.github.trks1970.common.extensible.infrastructure.repository.jpa.specification.DefaultExtensibleTypeSpecification;
-import com.github.trks1970.common.extensible.infrastructure.repository.propertytype.jpa.JpaDefaultPropertyTypeEntityEntityRepository;
+import com.github.trks1970.common.extensible.infrastructure.repository.propertytype.jpa.JpaDefaultPropertyTypeEntityRepository;
 import com.github.trks1970.common.infrastructure.mapper.EntityMapper;
 import com.github.trks1970.common.infrastructure.repository.jpa.JpaNamedEntityRepository;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +29,7 @@ public class DefaultExtensibleTypeRepositoryImpl
         DefaultPropertyTypeEntity> {
 
   private final JpaDefaultExtensibleTypeEntityRepository jpaExtensibleTypeEntityRepository;
-  private final JpaDefaultPropertyTypeEntityEntityRepository jpaPropertyTypeEntityRepository;
+  private final JpaDefaultPropertyTypeEntityRepository jpaPropertyTypeEntityRepository;
   private final JpaDefaultExtensibleEntityRepository jpaExtensibleEntityRepository;
   private final DefaultExtensibleTypeEntityMapper extensibleTypeEntityMapper;
 
@@ -49,7 +49,7 @@ public class DefaultExtensibleTypeRepositoryImpl
   }
 
   @Override
-  protected JpaDefaultPropertyTypeEntityEntityRepository propertyTypeRepository() {
+  protected JpaDefaultPropertyTypeEntityRepository propertyTypeRepository() {
     return jpaPropertyTypeEntityRepository;
   }
 

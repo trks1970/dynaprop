@@ -7,5 +7,4 @@ import java.util.Set;
 
 public interface PropertyValueRepository<ID extends Serializable, T extends IPropertyValue<ID>>
     extends NamedTypeRepository<ID, T> {
-  Set<T> getPropertyValues(ID extensibleTypeId);
 }

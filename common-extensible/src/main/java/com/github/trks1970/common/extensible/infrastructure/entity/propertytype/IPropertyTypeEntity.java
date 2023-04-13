@@ -5,11 +5,11 @@ import com.github.trks1970.common.extensible.infrastructure.entity.IExtensibleTy
 import com.github.trks1970.common.infrastructure.entity.INamedEntity;
 import java.io.Serializable;
 
-public interface IPropertyTypeEntity<ID extends Serializable, E extends IExtensibleTypeEntity<ID>>
+public interface IPropertyTypeEntity<ID extends Serializable, ETE extends IExtensibleTypeEntity<ID>>
     extends INamedEntity<ID> {
-  E getExtensibleType();
+  ETE getExtensibleType();
 
-  IPropertyTypeEntity<ID, E> setExtensibleType(E extensibleType);
+  IPropertyTypeEntity<ID, ETE> setExtensibleType(ETE extensibleType);
 
   Types getType();
 }

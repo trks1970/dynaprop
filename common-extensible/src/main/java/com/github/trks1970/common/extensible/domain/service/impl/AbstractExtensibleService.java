@@ -29,7 +29,7 @@ public abstract class AbstractExtensibleService<
 
   @Override
   @Transactional
-  public void removePropertyType(P propertyValue) {
+  public void removePropertyValue(P propertyValue) {
     propertyValueRepository().deleteById(propertyValue.getId());
   }
 }

@@ -5,6 +5,6 @@ import com.github.trks1970.common.extensible.infrastructure.entity.propertytype.
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface JpaDefaultPropertyTypeEntityEntityRepository
+public interface JpaDefaultPropertyTypeEntityRepository
     extends JpaPropertyTypeEntityRepository<
         Long, DefaultExtensibleTypeEntity, DefaultPropertyTypeEntity> {}

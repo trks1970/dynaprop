@@ -12,6 +12,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.Nullable;
 
 @Mapper
 @SuppressFBWarnings(
@@ -41,8 +42,8 @@ public abstract class DefaultStringPropertyValueEntityMapper
   public abstract DefaultStringPropertyValueEntity toEntity(
       DefaultStringPropertyValue type, @MappingTarget DefaultStringPropertyValueEntity entity);
 
-  protected String mapValueObject(Object valueObject) {
-    return valueObject.toString();
+  protected @Nullable String mapValueObject(@Nullable Object valueObject) {
+    return valueObject == null ? null : valueObject.toString();
   }
 
   protected DefaultExtensibleEntity mapExtensibleEntity(Long id) {
