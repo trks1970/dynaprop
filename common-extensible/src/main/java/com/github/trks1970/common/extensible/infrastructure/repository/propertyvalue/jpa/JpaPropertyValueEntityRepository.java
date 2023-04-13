@@ -6,15 +6,13 @@ import com.github.trks1970.common.extensible.infrastructure.entity.propertytype.
 import com.github.trks1970.common.extensible.infrastructure.entity.propertyvalue.IPropertyValueEntity;
 import com.github.trks1970.common.infrastructure.repository.jpa.JpaNamedEntityRepository;
 import java.io.Serializable;
-import java.util.Set;
 import org.springframework.data.repository.NoRepositoryBean;
 
 @NoRepositoryBean
 public interface JpaPropertyValueEntityRepository<
         ID extends Serializable,
-        ETE extends IExtensibleTypeEntity<ID>,
-        EE extends IExtensibleEntity<ID, ETE>,
-        PTE extends IPropertyTypeEntity<ID, ETE>,
-        PVE extends IPropertyValueEntity<ID, ETE, EE, PTE>>
-    extends JpaNamedEntityRepository<ID, PVE, Long> {
-}
+        PTE extends IPropertyTypeEntity<ID>,
+        ETE extends IExtensibleTypeEntity<ID, PTE>,
+        EE extends IExtensibleEntity<ID, PTE, ETE>,
+        PVE extends IPropertyValueEntity<ID, PTE, ETE, EE>>
+    extends JpaNamedEntityRepository<ID, PVE, Long> {}

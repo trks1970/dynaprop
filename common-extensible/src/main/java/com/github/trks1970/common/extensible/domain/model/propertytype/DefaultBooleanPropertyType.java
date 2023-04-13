@@ -13,7 +13,6 @@ public class DefaultBooleanPropertyType implements IPropertyType<Long> {
   Long id;
   @NonNull @lombok.NonNull @EqualsAndHashCode.Include String name;
   String description;
-  @NonNull @lombok.NonNull @EqualsAndHashCode.Include Long extensibleTypeId;
 
   @Override
   public Types getType() {

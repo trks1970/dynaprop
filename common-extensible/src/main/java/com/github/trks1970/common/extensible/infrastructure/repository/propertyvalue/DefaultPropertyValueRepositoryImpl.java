@@ -19,10 +19,10 @@ import org.springframework.stereotype.Component;
 public class DefaultPropertyValueRepositoryImpl
     extends PropertyValueRepositoryBase<
         Long,
+        DefaultPropertyTypeEntity,
         DefaultExtensibleTypeEntity,
         DefaultExtensibleEntity,
         IPropertyValue<Long>,
-        DefaultPropertyTypeEntity,
         DefaultPropertyValueEntity> {
 
   private final JpaDefaultPropertyValueEntityRepository jpaDefaultPropertyValueEntityRepository;
@@ -41,10 +41,5 @@ public class DefaultPropertyValueRepositoryImpl
   @Override
   protected Specification<DefaultPropertyValueEntity> name(String name) {
     return DefaultPropertyValueEntitySpecification.name(name);
-  }
-
-  @Override
-  protected Specification<DefaultPropertyValueEntity> extensibleId(Long extensibleId) {
-    return DefaultPropertyValueEntitySpecification.extensibleId(extensibleId);
   }
 }

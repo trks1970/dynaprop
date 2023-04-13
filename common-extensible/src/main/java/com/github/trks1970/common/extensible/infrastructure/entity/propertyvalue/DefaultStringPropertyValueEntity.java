@@ -19,7 +19,7 @@ import lombok.Setter;
 @DiscriminatorValue(PropertyDiscriminator.STRING)
 public class DefaultStringPropertyValueEntity extends DefaultPropertyValueEntity
     implements IPropertyValueEntity<
-        Long, DefaultExtensibleTypeEntity, DefaultExtensibleEntity, DefaultPropertyTypeEntity> {
+        Long, DefaultPropertyTypeEntity, DefaultExtensibleTypeEntity, DefaultExtensibleEntity> {
 
   @Column(name = "string_value")
   private String valueObject;

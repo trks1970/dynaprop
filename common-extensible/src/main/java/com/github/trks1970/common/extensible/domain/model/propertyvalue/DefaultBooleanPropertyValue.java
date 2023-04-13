@@ -14,9 +14,9 @@ public class DefaultBooleanPropertyValue implements IPropertyValue<Long> {
   Long id;
   @NonNull @lombok.NonNull @EqualsAndHashCode.Include String name;
   String description;
-  @NonNull @lombok.NonNull @EqualsAndHashCode.Include Long propertyTypeId;
-  @NonNull @lombok.NonNull @EqualsAndHashCode.Include Long extensibleId;
   @EqualsAndHashCode.Include Object valueObject;
+  Long extensibleId;
+  Long propertyTypeId;
 
   @Override
   public Types getType() {

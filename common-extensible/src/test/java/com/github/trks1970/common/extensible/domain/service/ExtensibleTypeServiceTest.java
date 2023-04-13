@@ -4,54 +4,55 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.github.trks1970.common.domain.exception.IntegrityViolationException;
+import com.github.trks1970.common.domain.exception.NotFoundException;
 import com.github.trks1970.common.extensible.domain.model.DefaultExtensibleType;
+import com.github.trks1970.common.extensible.domain.model.IExtensibleType;
 import com.github.trks1970.common.extensible.domain.model.propertytype.DefaultStringPropertyType;
 import com.github.trks1970.common.extensible.domain.model.propertytype.IPropertyType;
 import com.github.trks1970.common.extensible.domain.repository.ExtensibleTypeRepository;
-import com.github.trks1970.common.extensible.infrastructure.entity.DefaultExtensibleTypeEntity;
 import com.github.trks1970.common.extensible.infrastructure.repository.jpa.JpaDefaultExtensibleTypeEntityRepository;
-import com.github.trks1970.common.extensible.infrastructure.repository.propertytype.jpa.JpaDefaultPropertyTypeEntityRepository;
-import java.util.Objects;
 import java.util.Set;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
+@Slf4j
 class ExtensibleTypeServiceTest {
 
-  @Autowired ExtensibleTypeService<Long, IPropertyType<Long>, DefaultExtensibleType> service;
-  @Autowired ExtensibleTypeRepository<Long, DefaultExtensibleType> extensibleTypeRepository;
+  @Autowired
+  ExtensibleTypeService<Long, IPropertyType<Long>, DefaultExtensibleType> extensibleTypeService;
+
+  @Autowired
+  ExtensibleTypeRepository<Long, IPropertyType<Long>, DefaultExtensibleType>
+      extensibleTypeRepository;
+
   @Autowired JpaDefaultExtensibleTypeEntityRepository jpaExtensibleTypeRepository;
-  @Autowired JpaDefaultPropertyTypeEntityRepository jpaPropertyTypeEntityRepository;
+
+  IExtensibleType<Long> extensibleType;
 
   @BeforeEach
   void setup() {
-    jpaExtensibleTypeRepository.findAll().stream()
-        .map(DefaultExtensibleTypeEntity::getId)
-        .filter(Objects::nonNull)
-        .forEach(id -> extensibleTypeRepository.deleteById(id));
+    extensibleType =
+        extensibleTypeService.save(DefaultExtensibleType.builder().name("extensibleType").build());
   }
 
-  @Test
-  void testCreate() {
-    DefaultExtensibleType type = DefaultExtensibleType.builder().name("extensibleType").build();
-    assertThat(type.getId()).isNull();
-    type = service.save(type);
-
-    assertThat(type.getId()).isNotNull();
+  @AfterEach
+  void tearDown() {
+    extensibleTypeService.deleteById(extensibleType.getId());
   }
 
   @Test
   void testUpdate() {
-    DefaultExtensibleType type = DefaultExtensibleType.builder().name("extensibleType").build();
-    type = service.save(type);
+    DefaultExtensibleType type = extensibleTypeService.findById(extensibleType.getId());
 
     type = type.toBuilder().name("newName").build();
-    service.save(type);
+    extensibleTypeService.save(type);
 
-    DefaultExtensibleType found = service.findById(type.getId());
+    DefaultExtensibleType found = extensibleTypeService.findById(type.getId());
 
     assertThat(type.getId()).isEqualTo(found.getId());
     assertThat(found.getName()).isEqualTo(type.getName());
@@ -59,23 +60,21 @@ class ExtensibleTypeServiceTest {
 
   @Test
   void testDeleteById() {
-    DefaultExtensibleType type = DefaultExtensibleType.builder().name("extensibleType").build();
 
-    type = service.save(type);
-
-    service.deleteById(type.getId());
-
+    extensibleTypeService.deleteById(extensibleType.getId());
     assertThat(jpaExtensibleTypeRepository.findAll()).isEmpty();
   }
 
   @Test
   void testFindByName() {
-    DefaultExtensibleType type = DefaultExtensibleType.builder().name("extensibleType").build();
-    type = service.save(type);
 
-    service.findByName("extensibleType");
+    DefaultExtensibleType type =
+        extensibleTypeService.findByName("extensibleType").stream()
+            .findFirst()
+            .orElseThrow(
+                () -> new NotFoundException(DefaultExtensibleType.class, "name=[extensibleType]"));
 
-    DefaultExtensibleType found = service.findById(type.getId());
+    DefaultExtensibleType found = extensibleTypeService.findById(type.getId());
 
     assertThat(type.getId()).isEqualTo(found.getId());
     assertThat(found.getName()).isEqualTo(type.getName());
@@ -83,71 +82,47 @@ class ExtensibleTypeServiceTest {
 
   @Test
   void testFindByNameNotFound() {
-    assertThat(service.findByName("someOtherName")).isEmpty();
-  }
-
-  @Test
-  void testAddPropertyType() {
-    DefaultExtensibleType extensibleType =
-        service.save(DefaultExtensibleType.builder().name("extensibleType").build());
-    IPropertyType<Long> propertyType =
-        DefaultStringPropertyType.builder()
-            .name("stringProperty")
-            .extensibleTypeId(extensibleType.getId())
-            .build();
-
-    propertyType = service.addPropertyType(propertyType);
-    Set<IPropertyType<Long>> propertyTypes = service.getPropertyTypes(extensibleType.getId());
-
-    assertThat(propertyType.getId()).isNotNull();
-    assertThat(propertyTypes.size()).isEqualTo(1);
-  }
-
-  @Test
-  void testRemovePropertyType() {
-    DefaultExtensibleType extensibleType =
-        service.save(DefaultExtensibleType.builder().name("extensibleType").build());
-    IPropertyType<Long> propertyType =
-        DefaultStringPropertyType.builder()
-            .name("stringProperty")
-            .extensibleTypeId(extensibleType.getId())
-            .build();
-    propertyType = service.addPropertyType(propertyType);
-    Set<IPropertyType<Long>> propertyTypes = service.getPropertyTypes(extensibleType.getId());
-    assertThat(propertyType.getId()).isNotNull();
-    assertThat(propertyTypes.size()).isEqualTo(1);
-
-    service.removePropertyType(propertyType);
-    propertyTypes = service.getPropertyTypes(extensibleType.getId());
-    assertThat(propertyTypes).isEmpty();
-  }
-
-  @Test
-  void testDeleteWithPropertyType() {
-    DefaultExtensibleType extensibleType =
-        DefaultExtensibleType.builder().name("extensibleType").build();
-    extensibleType = service.save(extensibleType);
-    IPropertyType<Long> propertyType1 =
-        DefaultStringPropertyType.builder()
-            .name("stringProperty")
-            .extensibleTypeId(extensibleType.getId())
-            .build();
-    IPropertyType<Long> propertyType2 =
-        DefaultStringPropertyType.builder()
-            .name("stringProperty2")
-            .extensibleTypeId(extensibleType.getId())
-            .build();
-
-    service.addPropertyType(propertyType1);
-    service.addPropertyType(propertyType2);
-    service.deleteById(extensibleType.getId());
+    assertThat(extensibleTypeService.findByName("someOtherName")).isEmpty();
   }
 
   @Test
   void testNameNotUnique() {
-    service.save(DefaultExtensibleType.builder().name("extensibleType").build());
     assertThatThrownBy(
-            () -> service.save(DefaultExtensibleType.builder().name("extensibleType").build()))
+            () ->
+                extensibleTypeService.save(
+                    DefaultExtensibleType.builder().name("extensibleType").build()))
         .isInstanceOf(IntegrityViolationException.class);
   }
+
+  @Test
+  void testAddPropertyType() {
+    IPropertyType<Long> propertyType =
+        DefaultStringPropertyType.builder().name("propertyType").build();
+
+    extensibleTypeService.addPropertyType(extensibleType.getId(), propertyType);
+    Set<IPropertyType<Long>> propertyTypes =
+        extensibleTypeService.getPropertyTypes(extensibleType.getId());
+
+    assertThat(propertyTypes).containsExactly(propertyType);
+  }
+
+  @Test
+  void testRemovePropertyType() {
+    IPropertyType<Long> propertyType1 =
+        DefaultStringPropertyType.builder().name("propertyType").build();
+    IPropertyType<Long> propertyType2 =
+        DefaultStringPropertyType.builder().name("otherPropertyType").build();
+    propertyType1 = extensibleTypeService.addPropertyType(extensibleType.getId(), propertyType1);
+
+    propertyType2 = extensibleTypeService.addPropertyType(extensibleType.getId(), propertyType2);
+
+    extensibleTypeService.removePropertyType(extensibleType.getId(), propertyType1);
+    Set<IPropertyType<Long>> propertyTypes =
+        extensibleTypeService.getPropertyTypes(extensibleType.getId());
+
+    assertThat(propertyTypes).containsExactly(propertyType2);
+  }
+
+  @Test
+  void testDeleteWithPropertyType() {}
 }

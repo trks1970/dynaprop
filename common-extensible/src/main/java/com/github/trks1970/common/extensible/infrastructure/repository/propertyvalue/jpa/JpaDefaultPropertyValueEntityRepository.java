@@ -8,7 +8,7 @@ import com.github.trks1970.common.extensible.infrastructure.entity.propertyvalue
 public interface JpaDefaultPropertyValueEntityRepository
     extends JpaPropertyValueEntityRepository<
         Long,
+        DefaultPropertyTypeEntity,
         DefaultExtensibleTypeEntity,
         DefaultExtensibleEntity,
-        DefaultPropertyTypeEntity,
         DefaultPropertyValueEntity> {}

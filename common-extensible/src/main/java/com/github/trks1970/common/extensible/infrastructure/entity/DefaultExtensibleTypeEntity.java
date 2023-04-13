@@ -1,18 +1,23 @@
 package com.github.trks1970.common.extensible.infrastructure.entity;
 
+import com.github.trks1970.common.extensible.infrastructure.entity.propertytype.DefaultPropertyTypeEntity;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.persistence.Version;
+import java.util.HashSet;
+import java.util.Set;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.lang.Nullable;
 
 @Entity
@@ -21,8 +26,10 @@ import org.springframework.lang.Nullable;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@Builder
-public class DefaultExtensibleTypeEntity implements IExtensibleTypeEntity<Long> {
+@Slf4j
+public class DefaultExtensibleTypeEntity
+    implements IExtensibleTypeEntity<Long, DefaultPropertyTypeEntity> {
+
   @Id
   @SequenceGenerator(
       name = "seq_extensible_type",
@@ -45,4 +52,19 @@ public class DefaultExtensibleTypeEntity implements IExtensibleTypeEntity<Long> 
   @Column(name = "description")
   @Nullable
   private String description;
+
+  @OneToMany(mappedBy = "extensibleType", cascade = CascadeType.ALL, orphanRemoval = true)
+  private Set<DefaultPropertyTypeEntity> propertyTypes = new HashSet<>();
+
+  public DefaultPropertyTypeEntity addPropertyType(DefaultPropertyTypeEntity propertyType) {
+    propertyType.setExtensibleType(this);
+    log.debug("add {}", propertyTypes.add(propertyType));
+    return propertyType;
+  }
+
+  public DefaultPropertyTypeEntity removePropertyType(DefaultPropertyTypeEntity propertyType) {
+    log.debug("remove {} {}", propertyType, propertyTypes.remove(propertyType));
+    propertyType.setExtensibleType(null);
+    return propertyType;
+  }
 }

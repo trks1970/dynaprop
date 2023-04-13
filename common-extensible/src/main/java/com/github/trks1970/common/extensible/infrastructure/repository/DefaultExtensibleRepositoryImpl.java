@@ -3,6 +3,7 @@ package com.github.trks1970.common.extensible.infrastructure.repository;
 import com.github.trks1970.common.extensible.domain.model.DefaultExtensible;
 import com.github.trks1970.common.extensible.infrastructure.entity.DefaultExtensibleEntity;
 import com.github.trks1970.common.extensible.infrastructure.entity.DefaultExtensibleTypeEntity;
+import com.github.trks1970.common.extensible.infrastructure.entity.propertytype.DefaultPropertyTypeEntity;
 import com.github.trks1970.common.extensible.infrastructure.mapper.DefaultExtensibleEntityMapper;
 import com.github.trks1970.common.extensible.infrastructure.repository.jpa.JpaDefaultExtensibleEntityRepository;
 import com.github.trks1970.common.infrastructure.mapper.EntityMapper;
@@ -14,7 +15,11 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class DefaultExtensibleRepositoryImpl
     extends ExtensibleRepositoryBase<
-        Long, DefaultExtensible, DefaultExtensibleTypeEntity, DefaultExtensibleEntity> {
+        Long,
+        DefaultExtensible,
+        DefaultPropertyTypeEntity,
+        DefaultExtensibleTypeEntity,
+        DefaultExtensibleEntity> {
 
   private final JpaDefaultExtensibleEntityRepository jpaDefaultExtensibleEntityRepository;
   private final DefaultExtensibleEntityMapper defaultExtensibleEntityMapper;

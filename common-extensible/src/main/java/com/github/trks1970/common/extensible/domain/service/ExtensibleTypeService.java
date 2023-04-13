@@ -12,11 +12,11 @@ public interface ExtensibleTypeService<
     extends NamedTypeService<ID, ET> {
 
   @Transactional
+  PT addPropertyType(ID extensibleTypeId, PT propertyType);
+
+  @Transactional
+  PT removePropertyType(ID extensibleTypeId, PT propertyType);
+
+  @Transactional
   Set<PT> getPropertyTypes(ID extensibleTypeId);
-
-  @Transactional
-  PT addPropertyType(PT propertyType);
-
-  @Transactional
-  void removePropertyType(PT propertyType);
 }

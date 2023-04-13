@@ -54,7 +54,7 @@ public abstract class PersistentEntityRepositoryBase<
   }
 
   @NonNull
-  public E findEntityById(@NonNull ID id) {
+  protected E findEntityById(@NonNull ID id) {
     log.trace("Finding entity by id {}", id);
     return repository().findById(id).orElseThrow(() -> notFoundException(id, null, null));
   }

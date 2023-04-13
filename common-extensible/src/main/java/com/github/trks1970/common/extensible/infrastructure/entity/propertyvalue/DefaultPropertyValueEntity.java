@@ -5,6 +5,7 @@ import com.github.trks1970.common.extensible.infrastructure.entity.DefaultExtens
 import com.github.trks1970.common.extensible.infrastructure.entity.propertytype.DefaultPropertyTypeEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -28,7 +29,7 @@ import org.springframework.lang.Nullable;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public abstract class DefaultPropertyValueEntity
     implements IPropertyValueEntity<
-        Long, DefaultExtensibleTypeEntity, DefaultExtensibleEntity, DefaultPropertyTypeEntity> {
+        Long, DefaultPropertyTypeEntity, DefaultExtensibleTypeEntity, DefaultExtensibleEntity> {
 
   @Id
   @SequenceGenerator(
@@ -53,11 +54,11 @@ public abstract class DefaultPropertyValueEntity
   @Nullable
   private String description;
 
-  @ManyToOne(optional = false)
+  @ManyToOne(optional = false, fetch = FetchType.LAZY)
   @JoinColumn(name = "property_type_id")
   private DefaultPropertyTypeEntity propertyType;
 
-  @ManyToOne(optional = false)
+  @ManyToOne(optional = false, fetch = FetchType.LAZY)
   @JoinColumn(name = "extensible_id")
   private DefaultExtensibleEntity extensible;
 }

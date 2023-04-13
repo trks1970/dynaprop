@@ -1,15 +1,13 @@
 package com.github.trks1970.common.extensible.infrastructure.repository;
 
 import com.github.trks1970.common.extensible.domain.model.DefaultExtensibleType;
-import com.github.trks1970.common.extensible.infrastructure.entity.DefaultExtensibleEntity;
+import com.github.trks1970.common.extensible.domain.model.propertytype.IPropertyType;
 import com.github.trks1970.common.extensible.infrastructure.entity.DefaultExtensibleTypeEntity;
 import com.github.trks1970.common.extensible.infrastructure.entity.propertytype.DefaultPropertyTypeEntity;
 import com.github.trks1970.common.extensible.infrastructure.mapper.DefaultExtensibleTypeEntityMapper;
-import com.github.trks1970.common.extensible.infrastructure.repository.jpa.JpaDefaultExtensibleEntityRepository;
+import com.github.trks1970.common.extensible.infrastructure.mapper.propertytype.DefaultPropertyTypeEntityMapper;
 import com.github.trks1970.common.extensible.infrastructure.repository.jpa.JpaDefaultExtensibleTypeEntityRepository;
-import com.github.trks1970.common.extensible.infrastructure.repository.jpa.JpaExtensibleEntityRepository;
 import com.github.trks1970.common.extensible.infrastructure.repository.jpa.specification.DefaultExtensibleTypeSpecification;
-import com.github.trks1970.common.extensible.infrastructure.repository.propertytype.jpa.JpaDefaultPropertyTypeEntityRepository;
 import com.github.trks1970.common.infrastructure.mapper.EntityMapper;
 import com.github.trks1970.common.infrastructure.repository.jpa.JpaNamedEntityRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,14 +22,18 @@ public class DefaultExtensibleTypeRepositoryImpl
     extends ExtensibleTypeRepositoryBase<
         Long,
         DefaultExtensibleType,
-        DefaultExtensibleTypeEntity,
-        DefaultExtensibleEntity,
-        DefaultPropertyTypeEntity> {
+        IPropertyType<Long>,
+        DefaultPropertyTypeEntity,
+        DefaultExtensibleTypeEntity> {
 
   private final JpaDefaultExtensibleTypeEntityRepository jpaExtensibleTypeEntityRepository;
-  private final JpaDefaultPropertyTypeEntityRepository jpaPropertyTypeEntityRepository;
-  private final JpaDefaultExtensibleEntityRepository jpaExtensibleEntityRepository;
   private final DefaultExtensibleTypeEntityMapper extensibleTypeEntityMapper;
+  private final DefaultPropertyTypeEntityMapper propertyTypeEntityMapper;
+
+  @Override
+  protected JpaNamedEntityRepository<Long, DefaultExtensibleTypeEntity, Long> repository() {
+    return jpaExtensibleTypeEntityRepository;
+  }
 
   @Override
   protected EntityMapper<Long, DefaultExtensibleType, DefaultExtensibleTypeEntity> mapper() {
@@ -44,19 +46,8 @@ public class DefaultExtensibleTypeRepositoryImpl
   }
 
   @Override
-  protected JpaNamedEntityRepository<Long, DefaultExtensibleTypeEntity, Long> repository() {
-    return jpaExtensibleTypeEntityRepository;
-  }
-
-  @Override
-  protected JpaDefaultPropertyTypeEntityRepository propertyTypeRepository() {
-    return jpaPropertyTypeEntityRepository;
-  }
-
-  @Override
-  protected JpaExtensibleEntityRepository<
-          Long, DefaultExtensibleTypeEntity, DefaultExtensibleEntity>
-      extensibleRepository() {
-    return jpaExtensibleEntityRepository;
+  protected EntityMapper<Long, IPropertyType<Long>, DefaultPropertyTypeEntity>
+      propertyTypeMapper() {
+    return propertyTypeEntityMapper;
   }
 }

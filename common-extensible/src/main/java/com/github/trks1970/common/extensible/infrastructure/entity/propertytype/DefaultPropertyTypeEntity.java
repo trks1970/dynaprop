@@ -14,19 +14,22 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.persistence.Version;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.springframework.lang.Nullable;
 
 @Entity
 @Table(name = "property_type")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@Data
-@Accessors(chain = true)
+@Getter
+@Setter
+@NoArgsConstructor
+@ToString(onlyExplicitlyIncluded = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public abstract class DefaultPropertyTypeEntity
-    implements IPropertyTypeEntity<Long, DefaultExtensibleTypeEntity> {
+public abstract class DefaultPropertyTypeEntity implements IPropertyTypeEntity<Long> {
   @Id
   @SequenceGenerator(
       name = "seq_property_type",
@@ -35,22 +38,27 @@ public abstract class DefaultPropertyTypeEntity
       allocationSize = 1)
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_property_type")
   @Column(name = "id", nullable = false, updatable = false)
+  @ToString.Include
   private Long id;
 
   @Version
   @Column(name = "revision")
   @Nullable
+  @ToString.Include
   private Long revision;
 
   @Column(name = "name", unique = true, nullable = false)
   @EqualsAndHashCode.Include
+  @ToString.Include
   private String name;
 
   @Column(name = "description")
   @Nullable
+  @ToString.Include
   private String description;
 
   @ManyToOne(optional = false, fetch = FetchType.LAZY)
   @JoinColumn(name = "extensible_type_id")
+  @EqualsAndHashCode.Include
   private DefaultExtensibleTypeEntity extensibleType;
 }

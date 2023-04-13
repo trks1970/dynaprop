@@ -1,6 +1,5 @@
 package com.github.trks1970.common.extensible.infrastructure.repository.propertytype.jpa;
 
-import com.github.trks1970.common.extensible.infrastructure.entity.IExtensibleTypeEntity;
 import com.github.trks1970.common.extensible.infrastructure.entity.propertytype.IPropertyTypeEntity;
 import com.github.trks1970.common.infrastructure.repository.jpa.JpaNamedEntityRepository;
 import java.io.Serializable;
@@ -9,8 +8,7 @@ import org.springframework.data.repository.NoRepositoryBean;
 
 @NoRepositoryBean
 public interface JpaPropertyTypeEntityRepository<
-        ID extends Serializable,
-        ETE extends IExtensibleTypeEntity<ID>,
-        PTE extends IPropertyTypeEntity<ID, ETE>>
+        ID extends Serializable, PTE extends IPropertyTypeEntity<ID>>
     extends JpaNamedEntityRepository<ID, PTE, Long> {
+  Set<PTE> findByExtensibleTypeId(ID extensibleTypeId);
 }

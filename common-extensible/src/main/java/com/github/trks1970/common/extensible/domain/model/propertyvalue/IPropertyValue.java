@@ -7,9 +7,9 @@ import java.io.Serializable;
 public interface IPropertyValue<ID extends Serializable> extends INamed<ID> {
   Object getValueObject();
 
-  ID getPropertyTypeId();
-
   ID getExtensibleId();
+
+  ID getPropertyTypeId();
 
   Types getType();
 }
