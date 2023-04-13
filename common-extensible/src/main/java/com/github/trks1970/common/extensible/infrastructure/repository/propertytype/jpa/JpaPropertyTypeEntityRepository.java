@@ -2,17 +2,16 @@ package com.github.trks1970.common.extensible.infrastructure.repository.property
 
 import com.github.trks1970.common.extensible.infrastructure.entity.IExtensibleTypeEntity;
 import com.github.trks1970.common.extensible.infrastructure.entity.propertytype.IPropertyTypeEntity;
-import com.github.trks1970.common.infrastructure.entity.IdProjection;
-import com.github.trks1970.common.infrastructure.repository.jpa.NamedEntityRepository;
+import com.github.trks1970.common.infrastructure.repository.jpa.JpaNamedEntityRepository;
 import java.io.Serializable;
 import java.util.Set;
 import org.springframework.data.repository.NoRepositoryBean;
 
 @NoRepositoryBean
-public interface JpaPropertyTypeRepository<
+public interface JpaPropertyTypeEntityRepository<
         ID extends Serializable,
-        T extends IExtensibleTypeEntity<ID>,
-        E extends IPropertyTypeEntity<ID, T>>
-    extends NamedEntityRepository<E, ID, Long> {
-  Set<IdProjection<ID>> findIdByExtensibleTypeId(ID extensibleTypeId);
+        ETE extends IExtensibleTypeEntity<ID>,
+        PTE extends IPropertyTypeEntity<ID, ETE>>
+    extends JpaNamedEntityRepository<ID, PTE, Long> {
+  Set<PTE> findByExtensibleTypeId(ID extensibleTypeId);
 }

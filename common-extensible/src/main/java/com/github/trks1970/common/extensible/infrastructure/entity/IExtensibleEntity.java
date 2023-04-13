@@ -7,4 +7,6 @@ public interface IExtensibleEntity<ID extends Serializable, ET extends IExtensib
     extends IPersistentEntity<ID> {
 
   ET getExtensibleType();
+
+  IExtensibleEntity<ID, ET> setExtensibleType(ET extensibleType);
 }

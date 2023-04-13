@@ -18,7 +18,7 @@ public abstract class PersistentEntityRepositoryBase<
         ID extends Serializable, T extends IPersistent<ID>, E extends IPersistentEntity<ID>>
     implements PersistentTypeRepository<ID, T> {
 
-  protected abstract JpaBaseRepository<E, ID, Long> repository();
+  protected abstract JpaBaseRepository<ID, E, Long> repository();
 
   protected abstract EntityMapper<ID, T, E> mapper();
 

@@ -8,6 +8,7 @@ import java.io.Serializable;
 import org.mapstruct.ObjectFactory;
 import org.mapstruct.TargetType;
 import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 
 public abstract class ReferenceMapper<ID extends Serializable, E extends IPersistentEntity<ID>> {
 
@@ -15,12 +16,16 @@ public abstract class ReferenceMapper<ID extends Serializable, E extends IPersis
 
   protected abstract Class<E> entityClass();
 
-  public E map(@NonNull final ID id) {
-    return map(id, entityClass());
+  public @Nullable E mapOptional(@Nullable final ID id) {
+    return mapOptional(id, entityClass());
+  }
+
+  public @NonNull E mapRequired(@NonNull final ID id) {
+    return mapRequired(id, entityClass());
   }
 
   @ObjectFactory
-  protected E map(@NonNull final ID id, @TargetType Class<E> type) {
+  protected @NonNull E mapRequired(@NonNull final ID id, @TargetType Class<E> type) {
     E entity;
     try {
       entity = entityManager().getReference(type, id);
@@ -30,5 +35,13 @@ public abstract class ReferenceMapper<ID extends Serializable, E extends IPersis
     } catch (EntityNotFoundException e) {
       throw new NotFoundException(type, "id=[" + id + "]");
     }
+  }
+
+  @ObjectFactory
+  protected @Nullable E mapOptional(@Nullable final ID id, @TargetType Class<E> type) {
+    if (id == null) {
+      return null;
+    }
+    return mapRequired(id, type);
   }
 }

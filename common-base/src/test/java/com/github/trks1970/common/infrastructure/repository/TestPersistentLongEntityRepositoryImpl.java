@@ -24,7 +24,7 @@ public class TestPersistentLongEntityRepositoryImpl
   private final TestPersistentLongEntityMapper testPersistentLongEntityMapper;
 
   @Override
-  protected JpaBaseRepository<TestIPersistentLongEntity, Long, Long> repository() {
+  protected JpaBaseRepository<Long, TestIPersistentLongEntity, Long> repository() {
     return jpaTestPersistentLongEntityRepository;
   }
 

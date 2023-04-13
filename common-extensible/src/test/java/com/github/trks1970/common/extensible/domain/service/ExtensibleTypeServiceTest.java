@@ -10,7 +10,7 @@ import com.github.trks1970.common.extensible.domain.model.propertytype.IProperty
 import com.github.trks1970.common.extensible.domain.repository.ExtensibleTypeRepository;
 import com.github.trks1970.common.extensible.infrastructure.entity.DefaultExtensibleTypeEntity;
 import com.github.trks1970.common.extensible.infrastructure.repository.jpa.JpaDefaultExtensibleTypeEntityRepository;
-import com.github.trks1970.common.extensible.infrastructure.repository.propertytype.jpa.JpaDefaultPropertyTypeEntityRepository;
+import com.github.trks1970.common.extensible.infrastructure.repository.propertytype.jpa.JpaDefaultPropertyTypeEntityEntityRepository;
 import java.util.Objects;
 import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,7 +24,7 @@ class ExtensibleTypeServiceTest {
   @Autowired ExtensibleTypeService<Long, IPropertyType<Long>, DefaultExtensibleType> service;
   @Autowired ExtensibleTypeRepository<Long, DefaultExtensibleType> extensibleTypeRepository;
   @Autowired JpaDefaultExtensibleTypeEntityRepository jpaExtensibleTypeRepository;
-  @Autowired JpaDefaultPropertyTypeEntityRepository jpaPropertyTypeEntityRepository;
+  @Autowired JpaDefaultPropertyTypeEntityEntityRepository jpaPropertyTypeEntityRepository;
 
   @BeforeEach
   void setup() {

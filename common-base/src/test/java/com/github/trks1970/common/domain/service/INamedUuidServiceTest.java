@@ -7,7 +7,7 @@ import com.github.trks1970.common.domain.model.TestINamedUuid;
 import com.github.trks1970.common.domain.service.impl.NamedUuidServiceImpl;
 import com.github.trks1970.common.infrastructure.mapper.TestNamedUuidEntityMapperImpl;
 import com.github.trks1970.common.infrastructure.repository.TestNamedUuidEntityRepositoryImpl;
-import com.github.trks1970.common.infrastructure.repository.jpa.JpaTestNamedUuidEntityRepository;
+import com.github.trks1970.common.infrastructure.repository.jpa.JpaTestJpaNamedUuidEntityRepository;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -30,7 +30,7 @@ class INamedUuidServiceTest {
 
   @Autowired NamedUuidService service;
 
-  @Autowired JpaTestNamedUuidEntityRepository repository;
+  @Autowired JpaTestJpaNamedUuidEntityRepository repository;
 
   @BeforeEach
   void setup() {

@@ -1,21 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FindBugsFilter>
+  <!-- exclude generated hibernate metamodel -->
   <Match>
-
     <Source name="~.*\_.java"/>
-    <!--
-    <Source name =".*MapperImpl[.]java$" />
-    <Source name="~.*\_.java"/>
-    <Source name="~.*\MapperImpl.java"/>
-    -->
   </Match>
   <Match>
+    <!-- exclude generated mappers -->
     <Source name ="~.*MapperImpl[.]java" />
-
-    <!--
-    <Source name="~.*\_.java"/>
-    <Source name="~.*\MapperImpl.java"/>
-    -->
   </Match>
-
 </FindBugsFilter>

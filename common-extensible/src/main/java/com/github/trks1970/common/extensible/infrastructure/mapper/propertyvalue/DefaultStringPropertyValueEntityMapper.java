@@ -46,10 +46,10 @@ public abstract class DefaultStringPropertyValueEntityMapper
   }
 
   protected DefaultExtensibleEntity mapExtensibleEntity(Long id) {
-    return defaultExtensibleReferenceMapper.map(id);
+    return defaultExtensibleReferenceMapper.mapRequired(id);
   }
 
   protected DefaultPropertyTypeEntity mapPropertyType(Long id) {
-    return defaultPropertyTypeReferenceMapper.map(id);
+    return defaultPropertyTypeReferenceMapper.mapRequired(id);
   }
 }

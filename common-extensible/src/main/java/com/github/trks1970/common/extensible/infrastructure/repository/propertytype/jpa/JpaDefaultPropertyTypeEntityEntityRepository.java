@@ -2,7 +2,9 @@ package com.github.trks1970.common.extensible.infrastructure.repository.property
 
 import com.github.trks1970.common.extensible.infrastructure.entity.DefaultExtensibleTypeEntity;
 import com.github.trks1970.common.extensible.infrastructure.entity.propertytype.DefaultPropertyTypeEntity;
+import org.springframework.stereotype.Repository;
 
-public interface JpaDefaultPropertyTypeEntityRepository
-    extends JpaPropertyTypeRepository<
+@Repository
+public interface JpaDefaultPropertyTypeEntityEntityRepository
+    extends JpaPropertyTypeEntityRepository<
         Long, DefaultExtensibleTypeEntity, DefaultPropertyTypeEntity> {}

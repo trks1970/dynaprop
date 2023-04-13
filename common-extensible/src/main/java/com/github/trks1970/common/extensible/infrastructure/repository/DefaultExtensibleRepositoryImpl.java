@@ -20,7 +20,7 @@ public class DefaultExtensibleRepositoryImpl
   private final DefaultExtensibleEntityMapper defaultExtensibleEntityMapper;
 
   @Override
-  protected JpaBaseRepository<DefaultExtensibleEntity, Long, Long> repository() {
+  protected JpaBaseRepository<Long, DefaultExtensibleEntity, Long> repository() {
     return jpaDefaultExtensibleEntityRepository;
   }
 

@@ -1,7 +1,8 @@
 package com.github.trks1970.common.extensible.infrastructure.repository.jpa;
 
 import com.github.trks1970.common.extensible.infrastructure.entity.DefaultExtensibleEntity;
-import com.github.trks1970.common.infrastructure.repository.jpa.JpaBaseRepository;
+import com.github.trks1970.common.extensible.infrastructure.entity.DefaultExtensibleTypeEntity;
 
 public interface JpaDefaultExtensibleEntityRepository
-    extends JpaBaseRepository<DefaultExtensibleEntity, Long, Long> {}
+    extends JpaExtensibleEntityRepository<
+        Long, DefaultExtensibleTypeEntity, DefaultExtensibleEntity> {}

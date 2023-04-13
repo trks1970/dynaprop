@@ -36,6 +36,6 @@ public abstract class DefaultStringPropertyTypeEntityMapper
       DefaultStringPropertyType type, @MappingTarget DefaultStringPropertyTypeEntity entity);
 
   protected DefaultExtensibleTypeEntity mapExtensibleTypeId(Long extensibleTypeId) {
-    return defaultExtensibleTypeReferenceMapper.map(extensibleTypeId);
+    return defaultExtensibleTypeReferenceMapper.mapRequired(extensibleTypeId);
   }
 }

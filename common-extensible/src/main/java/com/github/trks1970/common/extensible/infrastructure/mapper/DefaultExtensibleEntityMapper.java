@@ -9,6 +9,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.Nullable;
 
 @Mapper
 @SuppressFBWarnings(
@@ -23,8 +24,8 @@ public abstract class DefaultExtensibleEntityMapper
   @Mapping(target = "extensibleTypeId", source = "extensibleType.id")
   public abstract DefaultExtensible toDomain(DefaultExtensibleEntity entity);
 
-  protected DefaultExtensibleTypeEntity mapExtensibleTypeId(Long id) {
-    return defaultExtensibleTypeReferenceMapper.map(id);
+  protected @Nullable DefaultExtensibleTypeEntity mapExtensibleTypeId(Long id) {
+    return defaultExtensibleTypeReferenceMapper.mapOptional(id);
   }
 
   @Override
